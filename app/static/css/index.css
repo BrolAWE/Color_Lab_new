@@ -1,0 +1,28 @@
+.colorpicker {
+    float: left;
+    margin: 1em;
+}
+
+form {
+    margin: 2em 1em 0 1;
+    text-align: left;
+}
+
+body {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    display: block;
+    margin: 8px;
+}
+
+p {
+    clear: both;
+}
+
+button.t1 {
+    background-color: #808080;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 12px 42px;
+    border-radius: 10px;
+    font-size: 17px;
+}

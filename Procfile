@@ -1,0 +1,1 @@
+web: gunicorn Color_Lab.wsgi --log-file -

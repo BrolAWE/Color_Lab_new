@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Загрузка таблицы
+<table border="2">
+    <tr>
+        <th>Страна рожд.</th>
+        <th>Страна прож.</th>
+        <th>Худ.обр.</th>
+        <th>Язык</th>
+        <th>Воспр.цв.</th>
+    </tr>
+    {% for item in clients %}
+    <tr>
+        <td>{{ item.Client_country1 }}</td>
+        <td>{{ item.Client_country2 }}</td>
+        <td>{{ item.Client_edu }}</td>
+        <td>{{ item.Client_lang }}</td>
+        <td>{{ item.Client_shade }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

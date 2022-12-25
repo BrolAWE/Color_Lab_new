@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="{% static 'scripts/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/excanvas.compiled.js' %}"></script>
+
+    <title>SMOLGU. ColorLab</title>
+    <style type="text/css" media="screen">
+        body {
+            font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            display: block;
+            margin: 8px;
+        }
+
+        p {
+            clear: both;
+        }
+
+        }
+    </style>
+</head>
+{% load static %}
+<body background="{% static 'Images/fon1.jpg' %}" text="black">
+{% if Lg == "ru" %}
+<h4>Спасибо за участие!</h4>
+<p>Свои пожелания, комментарии и вопросы Вы можете направить по электронной почте руководителю проекта профессору
+    Юлии Грибер по электронному адресу
+    <a href="mailto:y.griber@gmail.com">y.griber@gmail.com</a>.</p>
+<p>Актуальную информацию об этом и других проектах Лаборатории цвета Вы можете
+    получить на сайте <a href="http://color-lab.org">http://color-lab.org</a>.</p>
+{% endif %}
+{% if Lg == "en" %}
+<h4>Thank you for participating!</h4>
+<p>To give us your feedback and comments please contact the coordinator of the project Prof. Yula A. Griber:
+    <a href="mailto:y.griber@gmail.com">y.griber@gmail.com</a>.</p>
+<p>You can visit <a href="http://color-lab.org">http://color-lab.org</a> to inform you about the current
+    and past research projects of ColorLab.</p>
+{% endif %}
+{% if Lg == "es" %}
+<h4>¡Gracias por participar!</h4>
+<p>Para darnos tu opinión y comentarios, ponte en contacto con la coordinadora del proyecto, la profesora Yulia A.
+    Griber:
+    <a href="mailto:y.griber@gmail.com">y.griber@gmail.com</a>.</p>
+<p>Puedes visitar la página: <a href="http://color-lab.org">http://color-lab.org</a>, para informarte sobre los
+    proyectos de investigación actuales y pasados de ColorLab.</p>
+{% endif %}
+{% if Lg == "ar" %}
+<h4>شكرا لك لمشاركتك في هذه الدراسة</h4>
+<p><a href="mailto:y.griber@gmail.com">y.griber@gmail.com</a>إذا رغبت تزويدنا بملاحظاتك ومقترحاتك ، أرجو مراسلة منسقة
+    المشروع البحثي البروفيسورة يوليا قرايبر على البريد الإلكتروني </p>
+<p> للإطلاغ على المشاريع البحثية الحالية والسابقة<a href="http://color-lab.org">http://color-lab.org</a>
+    يمكنك زيارة موقع معمل دراسات الألون </p>
+{% endif %}
+{% if Lg == "cz" %}
+<h4>Děkujeme za účast!</h4>
+<p>Svá přání, připomínky a dotazy můžete zasílat elektronicky koordinátorce projektu profesorce Julii Griber na adresu
+    <a href="mailto:y.griber@gmail.com">y.griber@gmail.com</a>.</p>
+<p>Aktuální informace o tomto a dalších projektech Laboratoře vyzkumu barev získáte na <a href="http://color-lab.org">http://color-lab.org</a>
+</p>
+{% endif %}
+<br><br><br>
+</body>
+</html>
+

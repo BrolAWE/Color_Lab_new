@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="{% static 'scripts/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/excanvas.compiled.js' %}"></script>
+    <title>SMOLGU. ColorLab</title>
+    <script type="text/javascript" charset="utf-8" src="{% static 'src/farbtastic.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function () {
+            $('#colorpicker1').farbtastic('#color1');
+            $('#colorpicker2').farbtastic({callback: '#color2', width: 150});
+        });
+    </script>
+    <style type="text/css" media="screen">
+        .colorpicker {
+            float: left;
+            margin: 1em;
+        }
+
+        form {
+            margin: 2em 1em;
+            text-align: center;
+        }
+
+        body {
+            font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            background-color: gray;
+            color: #FFF;
+            display: block;
+            margin: 8px;
+        }
+
+        p {
+            clear: both;
+        }
+
+        button.t1 {
+            background-color: #808080;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 12px 42px;
+            border-radius: 10px;
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+{% if Lg == "en" %}
+<p>Please, select a color for the white stripe in the middle using a color wheel.
+    Choose this color so that the whole color combination is as harmonious as possible.</p>
+<p>The color wheel consists of two parts. First, moving the cursor in a circle,
+    you can select hue. Then, moving the cursor over the inner square, you can
+    refine its lightness and saturation. </p>
+<p>The time for the color selection is not limited. You can search for
+    the right one until you find it. After you have selected a color,
+    click "continue" to go to the next page. </p>
+{% endif %}
+{% if Lg == "ru" %}
+<p>Выберите, пожалуйста, в предложенной палитре цвет для неокрашенной
+    полосы в центре. Цвет нужно подобрать таким образом, чтобы сочетание всех
+    трех оттенков получилось как можно более гармоничным.</p>
+<p>Палитра состоит из двух частей. Сначала, двигая курсор по кругу,
+    нужно выбрать тон оттенка. Потом, перемещая курсор по внутреннему квадрату –
+    уточнить его яркость и насыщенность. </p>
+<p>Время выбора не ограничено. Вы можете искать нужный вариант до тех пор,
+    пока не найдете. Когда Вы выберете оттенок, нажмите «продолжить»,
+    чтобы перейти к следующей странице. </p>
+{% endif %}
+{% if Lg == "es" %}
+<p>Por favor, selecciona un color para la franja blanca del centro, utilizando una rueda de colores. Elige este color
+    para que toda la combinación de colores sea lo más armoniosa posible.</p>
+<p>La rueda de colores consta de dos partes. Primero, moviendo el cursor en un círculo, puedes seleccionar el tono.
+    Luego, moviendo el cursor sobre el cuadrado interior, puedes refinar su luminosidad y saturación.
+</p>
+<p>El tiempo para la selección del color no está limitado. Puedes buscar el adecuado hasta que lo encuentres. Una vez
+    que hayas seleccionado un color, haz clic en "continuar" para pasar a la página siguiente.
+</p>
+{% endif %}
+{% if Lg == "ar" %}
+<p> من فضلك لوّن الشريط الأبيض الذي في المنتصف باستخدام عجلة الألون في يمين الصفحة. اختر لون للشريط بحيث تكون ألوان
+    الأشرطة الثلاثة في الصفحة متناغمة قدر الإمكان</p>
+<p>عجلة الألون في يمين الصفحة تتكون من جزئين : الجزء الأول المربع (حرك المؤشر داخل المربع لتحسين إضاءة اللون و وضوحه) ،
+    الجزء الثاني : الدائرة المحيطة بالمربع (حرك المؤشر داخل الدائرة لتحديد اللون الذي ترغب)</p>
+<p>لا يوجد وقت محدد لأختيار الألوان ، يمكنك أخذ الوقت الكافي لتحديد اللون الذي يجعل جميع ألوان الأشرطة الثلاث متناغمة
+    إلى أقصى درجة. بعد تحديد اللون إضغط على الزر "متابعة" للإنتقال إلى الصفحة التالية
+</p>
+{% endif %}
+{% if Lg == "cz" %}
+<p>Vyberte prosím barvu pro bílý prostřední pruh pomocí palety. Barvu zvolte tak, aby Vám kombinace všech tří pruhů
+    připadala co nejharmoničtější.</p>
+<p>Paleta se skládá ze dvou částí. Nejprve pohybem kurzoru v kruhu vyberte odstín. Poté pohybem kurzoru ve vnitřním
+    čtverci upravte jeho jas a sytost.</p>
+<p>Doba výběru není omezena. Můžete hledat správnou možnost, dokud ji nenajdete. Až budete se svým výběrem spokojeni,
+    klikněte na "pokračovat" pro přechod na další stránku.</p>
+{% endif %}
+<table>
+    <tr>
+        <td width="1250">
+            <canvas id="myCanvas1" width="1200" height="458" style="border:0px solid #000000;"></canvas>
+            <canvas id="myCanvas" width="1200" height="80" style="border:0px solid #000000;"></canvas>
+            <canvas id="myCanvas2" width="1200" height="242" style="border:0px solid #000000;"></canvas>
+        </td>
+        <td width="200">
+            {% if Lg == "ru" %}
+            <h4>страница 1 из 15</h4>
+            {% endif %}
+            {% if Lg == "en" %}
+            <h4>page 1 from 15</h4>
+            {% endif %}
+            {% if Lg == "es" %}
+            <h4>página 1 a 15</h4>
+            {% endif %}
+            {% if Lg == "ar" %}
+            <h4>صفحة 1 من 15</h4>
+            {% endif %}
+            {% if Lg == "cz" %}
+            <h4>stránka 1 až 15</h4>
+            {% endif %}
+            <div class="colorpicker">
+                <div id="colorpicker1"></div>
+                <form action="{% url 'index1' %}" method="POST" class="post-form"> {% csrf_token %}
+                    <p style="margin-left: 0px"><input type="text" id="color1" name="mycolor" value="#FFFFFF"/></p>
+                    <br><br><br><br>
+                    <p style="margin-left: 0px">
+                        <button class="t1" type="submit">{{next}}</button>
+                    </p>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<script>
+
+    var c1 = document.getElementById("myCanvas1");
+    var ctx1 = c1.getContext("2d");
+    ctx1.fillStyle = "#839196";
+    ctx1.fillRect(0, 0, 1200, 458);
+
+    var c2 = document.getElementById("myCanvas2");
+    var ctx2 = c2.getContext("2d");
+    ctx2.fillStyle = "#AC8F51";
+    ctx2.fillRect(0, 0, 1200, 242);
+
+    $('#color1').change(function () {
+        var x = $(this).val();
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+//alert(x);
+        ctx.fillStyle = x; //#FF0000";
+        ctx.fillRect(0, 0, 1200, 80);
+    });
+
+</script>
+</body>
+</html>
+
