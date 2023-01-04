@@ -155,8 +155,8 @@ class Client_ColorForm_en(forms.ModelForm):
             'Client_shade')
         labels = {
             'Client_Year': ('Year of birth :'), 'Client_sex': ('Gender :'), 'Client_country1': ('Country of birth :'),
-            'Client_country2': ('Country of residence :'), 'Client_lang': ('Mother tongue :'),
-            'Client_edu': ('Art education :'),
+            'Client_country2': ('Country of residence :'), 'Client_lang': ('Native language :'),
+            'Client_edu': ('Have you studied art before?'),
             'Client_shade': ('Do you have difficulties seeing certain colours?')
         }
         error_messages = {

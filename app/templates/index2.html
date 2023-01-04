@@ -13,6 +13,7 @@
             $('#colorpicker1').farbtastic('#color1');
             $('#colorpicker2').farbtastic({callback: '#color2', width: 150});
         });
+
     </script>
     <style type="text/css" media="screen">
         .colorpicker {
@@ -45,13 +46,14 @@
             border-radius: 10px;
             font-size: 17px;
         }
+
     </style>
 </head>
 <body>
 {% if Lg == "en" %}
-<p>Please, select a color of the white stripe in the middle using a color wheel again.
-    Choose this color so that the whole color combination is as harmonious as possible.
-    After you have selected a color, click "continue" to go to the next page.</p>
+<p>Using a color wheel again, please select a color for the white stripe in the middle. Choose the color you feel makes
+    the whole combination as harmonious as possible. After you have selected a color, click "continue" to go to the next
+    page.</p>
 {% endif %}
 {% if Lg == "ru" %}
 <p>Выберите, пожалуйста, в предложенной палитре цвет для неокрашенной полосы в центре еще раз.
@@ -85,7 +87,7 @@
             <h4>страница 2 из 15</h4>
             {% endif %}
             {% if Lg == "en" %}
-            <h4>page 2 from 15</h4>
+            <h4>page 2 of 15</h4>
             {% endif %}
             {% if Lg == "es" %}
             <h4>página 2 a 15</h4>
@@ -129,6 +131,7 @@
         ctx.fillStyle = x; //#FF0000";
         ctx.fillRect(0, 0, 1200, 80);
     });
+
 
 </script>
 </body>
