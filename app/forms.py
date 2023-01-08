@@ -111,6 +111,9 @@ COU_CHOICES = [
     ('United Kingdom ', 'United Kingdom'),
     ('USA', 'USA'),
     ('Other', 'Other'),
+    ('Oman', 'Oman'),
+    ('Pakistan', 'Pakistan'),
+    ('Philippines', 'Philippines'),
 ]
 
 
