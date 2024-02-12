@@ -46,52 +46,60 @@
         <td width="200">
             <form action="{% url 'index15' %}" method="POST"> {% csrf_token %}
                 {% if Lg == "ru" %}
-                <p><b>Какое сочетание цветов Вам нравится больше, слева или справа?</b></p>
-                <p><input name="left" type="radio" value="yes"> слева </p>
-                <p><input name="left" type="radio" value="no"> справа</p>
+                    <p><b>Какое сочетание цветов Вам нравится больше, слева или справа?</b></p>
+                    <p><input name="left" type="radio" value="yes"> слева </p>
+                    <p><input name="left" type="radio" value="no"> справа</p>
                 {% endif %}
                 {% if Lg == "en" %}
-                <p><b>Which color combination do you like better, the left or the right one?</b></p>
-                <p><input name="left" type="radio" value="yes"> left </p>
-                <p><input name="left" type="radio" value="no"> right </p>
+                    <p><b>Which color combination do you like better, the left or the right one?</b></p>
+                    <p><input name="left" type="radio" value="yes"> left </p>
+                    <p><input name="left" type="radio" value="no"> right </p>
                 {% endif %}
                 {% if Lg == "es" %}
-                <p><b>¿Qué combinación de colores te gusta más, la de la izquierda o la de la derecha?</b></p>
-                <p><input name="left" type="radio" value="yes">Izquierda</p>
-                <p><input name="left" type="radio" value="no">Derecha</p>
+                    <p><b>¿Qué combinación de colores te gusta más, la de la izquierda o la de la derecha?</b></p>
+                    <p><input name="left" type="radio" value="yes">Izquierda</p>
+                    <p><input name="left" type="radio" value="no">Derecha</p>
                 {% endif %}
                 {% if Lg == "ar" %}
-                <p><b>أياً من تشكيلة الألوان تفضل أكثر  : الذي على اليمين أو الذي على اليسار ؟</b></p>
-                <p><input name="left" type="radio" value="yes">الأيسر</p>
-                <p><input name="left" type="radio" value="no">الأيمن</p>
+                    <p><b>أياً من تشكيلة الألوان تفضل أكثر : الذي على اليمين أو الذي على اليسار ؟</b></p>
+                    <p><input name="left" type="radio" value="yes">الأيسر</p>
+                    <p><input name="left" type="radio" value="no">الأيمن</p>
                 {% endif %}
                 {% if Lg == "cz" %}
-                <p><b>Která barevná kombinace se Vám líbí víc, levá nebo pravá?</b></p>
-                <p><input name="left" type="radio" value="yes">levá</p>
-                <p><input name="left" type="radio" value="no">pravá</p>
+                    <p><b>Která barevná kombinace se Vám líbí víc, levá nebo pravá?</b></p>
+                    <p><input name="left" type="radio" value="yes">levá</p>
+                    <p><input name="left" type="radio" value="no">pravá</p>
+                {% endif %}
+                {% if Lg == "ind" %}
+                    <p><b>Kombinasi warna mana yang lebih Anda sukai, kiri atau kanan?</b></p>
+                    <p><input name="left" type="radio" value="yes">Kiri</p>
+                    <p><input name="left" type="radio" value="no">Kanan</p>
                 {% endif %}
                 <p style="margin-left: 0px">
-                <p>{{msg}}</p>
-                <button class="t1" type="submit" id="button">{{next}}</button>
+                <p>{{ msg }}</p>
+                <button class="t1" type="submit" id="button">{{ next }}</button>
                 </p>
             </form>
         </td>
         <td width="860">
             <div style="float: right;">
                 {% if Lg == "ru" %}
-                <h4>страница 15 из 15</h4>
+                    <h4>страница 15 из 15</h4>
                 {% endif %}
                 {% if Lg == "en" %}
-                <h4>page 15 from 15</h4>
+                    <h4>page 15 from 15</h4>
                 {% endif %}
                 {% if Lg == "es" %}
-                <h4>página 15 a 15</h4>
+                    <h4>página 15 a 15</h4>
                 {% endif %}
                 {% if Lg == "ar" %}
-                <h4>صفحة 15 من 15</h4>
+                    <h4>صفحة 15 من 15</h4>
                 {% endif %}
                 {% if Lg == "cz" %}
-                <h4>stránka 15 až 15</h4>
+                    <h4>stránka 15 až 15</h4>
+                {% endif %}
+                {% if Lg == "ind" %}
+                    <h4>Halaman 15 dari 15</h4>
                 {% endif %}
             </div>
         </td>

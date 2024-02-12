@@ -51,24 +51,33 @@
 </head>
 <body>
 {% if Lg == "en" %}
-<p>Using a color wheel again, please select a color for the white stripe in the middle. Choose the color you feel makes
-    the whole combination as harmonious as possible. After you have selected a color, click "continue" to go to the next
-    page.</p>
+    <p>Using a color wheel again, please select a color for the white stripe in the middle. Choose the color you feel
+        makes
+        the whole combination as harmonious as possible. After you have selected a color, click "continue" to go to the
+        next
+        page.</p>
 {% endif %}
 {% if Lg == "ru" %}
-<p>Выберите, пожалуйста, в предложенной палитре цвет для неокрашенной полосы в центре еще раз.
-    Цвет снова нужно подобрать таким образом, чтобы сочетание всех трех оттенков получилось как
-    можно более гармоничным. Когда Вы выберете оттенок, нажмите «продолжить»,
-    чтобы перейти к следующей странице.</p>
+    <p>Выберите, пожалуйста, в предложенной палитре цвет для неокрашенной полосы в центре еще раз.
+        Цвет снова нужно подобрать таким образом, чтобы сочетание всех трех оттенков получилось как
+        можно более гармоничным. Когда Вы выберете оттенок, нажмите «продолжить»,
+        чтобы перейти к следующей странице.</p>
 {% endif %}
 {% if Lg == "es" %}
-<p>Por favor, selecciona un color de la franja blanca del centro utilizando de nuevo una rueda de colores. Elige este
-    color para que toda la combinación de colores sea lo más armoniosa posible. Una vez que hayas seleccionado un color,
-    haz clic en "continuar" para pasar a la página siguiente.</p>
+    <p>Por favor, selecciona un color de la franja blanca del centro utilizando de nuevo una rueda de colores. Elige
+        este
+        color para que toda la combinación de colores sea lo más armoniosa posible. Una vez que hayas seleccionado un
+        color,
+        haz clic en "continuar" para pasar a la página siguiente.</p>
 {% endif %}
 {% if Lg == "ar" %}
-<p>من فضلك حدد لون الشريط الأبيض في المنتصف باستخدام عجلة الألوان. أختر لون الشريط بحيث يكون مجموع الألوان بأكملها
-    متناغمة قدر الإمكان. بعد تحديد اللون إضغط على الزر "متابعة" للإنتقال إلى الصفحة التالية</p>
+    <p>من فضلك حدد لون الشريط الأبيض في المنتصف باستخدام عجلة الألوان. أختر لون الشريط بحيث يكون مجموع الألوان بأكملها
+        متناغمة قدر الإمكان. بعد تحديد اللون إضغط على الزر "متابعة" للإنتقال إلى الصفحة التالية</p>
+{% endif %}
+{% if Lg == "ind" %}
+    <p>Dengan menggunakan roda warna sekali lagi, pilih warna untuk garis putih di bagian tengah. Pilih warna yang
+        menurut Anda membuat seluruh kombinasi serasi. Setelah Anda memilih warna, klik "lanjutkan" untuk beralih ke
+        halaman berikutnya.</p>
 {% endif %}
 <table>
     <tr>
@@ -79,19 +88,22 @@
         </td>
         <td width="200">
             {% if Lg == "ru" %}
-            <h4>страница 4 из 15</h4>
+                <h4>страница 4 из 15</h4>
             {% endif %}
             {% if Lg == "en" %}
-            <h4>page 4 of 15</h4>
+                <h4>page 4 of 15</h4>
             {% endif %}
             {% if Lg == "es" %}
-            <h4>página 4 a 15</h4>
+                <h4>página 4 a 15</h4>
             {% endif %}
             {% if Lg == "ar" %}
-            <h4>صفحة 4 من 15</h4>
+                <h4>صفحة 4 من 15</h4>
             {% endif %}
             {% if Lg == "cz" %}
-            <h4>stránka 4 až 15</h4>
+                <h4>stránka 4 až 15</h4>
+            {% endif %}
+            {% if Lg == "ind" %}
+                <h4>Halaman 4 dari 15</h4>
             {% endif %}
             <div class="colorpicker">
                 <div id="colorpicker1"></div>
@@ -99,7 +111,7 @@
                     <p style="margin-left: 0px"><input type="text" id="color1" name="mycolor" value="#FFFFFF"/></p>
                     <br><br><br><br>
                     <p style="margin-left: 0px">
-                        <button class="t1" type="submit">{{next}}</button>
+                        <button class="t1" type="submit">{{ next }}</button>
                     </p>
                 </form>
             </div>

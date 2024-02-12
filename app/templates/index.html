@@ -1,100 +1,129 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block content %}
-<form id='lang_ru' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
-    <input type='hidden' name='language' value='ru'/>
-    <a href='#' title='Russian' onclick="document.getElementById('lang_ru').submit()">
-        Русский
-    </a>
-</form>
-<form id='lang_en' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
-    <input type='hidden' name='language' value='en'/>
-    <a href='#' title='English' onclick="document.getElementById('lang_en').submit()">
-        English
-    </a>
-</form>
-<form id='lang_es' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
-    <input type='hidden' name='language' value='es'/>
-    <a href='#' title='Spain' onclick="document.getElementById('lang_es').submit()">
-        Español
-    </a>
-</form>
-<form id='lang_ar' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
-    <input type='hidden' name='language' value='ar'/>
-    <a href='#' title='Spain' onclick="document.getElementById('lang_ar').submit()">
-        العربية
-    </a>
-</form>
-<form id='lang_cz' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
-    <input type='hidden' name='language' value='cz'/>
-    <a href='#' title='Cz' onclick="document.getElementById('lang_cz').submit()">
-        Čeština
-    </a>
-</form>
-{% if Lg == "en" %}
-<h4>The <em>ColorLab</em> Research and Educational Center at Smolensk State University is studying the principles of
-    color
-    harmony in urban environments.</h4>
-<p>In this experiment, we would like to ask which color combinations you personally like.</p>
-<p>This study takes about 10 minutes. We will show you 5 color charts. Each chart consists of three horizontal stripes
-    of different widths. The colors of the top and bottom stripes are fixed and you cannot change them. You will be
-    asked to select a color for the white (uncolored) stripe in the middle. Choose the color you feel makes the whole
-    combination as harmonious as possible. </p>
-<p>If you are ready to take part in this study, please fill out the form below.</p>
-{% endif %}
-{% if Lg == "ru" %}
-<h4>Лаборатория цвета Смоленского государственного университета изучает принципы гармоничной колористики города.</h4>
-<p>В этом эксперименте мы хотим узнать, какие цветовые сочетания нравятся лично Вам.</p>
-<p>Исследование займет не более 10 минут. Мы покажем Вам 5 цветовых таблиц. Каждая будет состоять из трех горизонтальных
-    полос разной ширины. Цвет верхней и нижней полос будет закреплен, его Вы изменить не сможете. Ваша задача будет
-    заключаться в том, чтобы с помощью курсора выбрать в предложенной палитре цвет для неокрашенной полосы в центре.
-    Цвет нужно подобрать таким образом, чтобы сочетание всех трех оттенков получилось как можно более гармоничным.</p>
-<p>Если Вы готовы принять участие в исследовании, заполните, пожалуйста, анкету.</p>
-{% endif %}
-{% if Lg == "es" %}
-<h4>El ColorLab del Centro de Investigación y Educación de la Universidad Estatal de Smolensk, estudia los principios de
-    la armonía del color en los entornos urbanos.</h4>
-<p>En este experimento, queremos averiguar qué combinaciones de colores te gustan, en forma personal.</p>
-<p>Este estudio dura unos 10 minutos. Te mostraremos 5 cartas de colores. Cada carta consta de tres franjas horizontales
-    de diferente anchura. Los colores de las franjas superior e inferior son fijos y no puedes cambiarlos. Se te pedirá
-    que selecciones un color para la franja blanca (sin color) del centro. Elige este color, para que toda la
-    combinación de colores sea lo más armoniosa posible.</p>
-<p>Si estás dispuesto a participar en este estudio, por favor, rellena el siguiente formulario.</p>
-{% endif %}
-{% if Lg == "ar" %}
-<h4>يجري معمل دراسات ألألوان في مركز البحوث والتعلم التابع لجامعة ولاية سمولينسك في جمهورية روسيا الأتحادية درسات حول
-    مبادئ تناغم الألوان في المجتمعات والبيئات الحضرية</h4>
-<p>في هذه الدراسة الحالية نسعى إلى معرفة تركيبات الألوان التي تفضلها شخصياً</p>
-<p>تستغرق الدراسة الحالية قرابة العشر دقائق لإستكمالها. سيعرض عليك خمس شرائح ، كل شريحة تحتوي على ثلاث أشرطة (خطوط)
-    عرضية بأحجام مختلفة. اللون العلوي والسفلي في كل الشرائح الخمس ثابتة ولا يمكن تغييرها. سيطلب منك تحديد لون الشريط
-    الأبيض في المنتصف. سوف تقوم بإختيار لون لهذا الشريط حتى يكون متناغماً قدر الإمكان مع اللون الذي أعلاه و أسفلة
-</p>
-<p>إذا كنت مستعداً للمشاركة في هذه الدراسة ، نأمل منك تعبئة البيانات التالية</p>
-{% endif %}
-{% if Lg == "cz" %}
-<h4>Laboratoř výzkumu barev zkoumá principy harmonické koloristiky města.</h4>
-<p>V tomto experimentu chceme zjistit, jaké barevné kombinace se Vám osobně líbí.</p>
-<p>Studie nezabere více než 10 minut. Ukážeme vám 5 barevných schémat. Každé se bude skládat ze tří horizontálních pruhů
-    různé šířky. Barva horního a spodního pruhu bude neměnná a Vaším úkolem bude pomocí kurzoru vybrat barvu pro
-    prostřední bílý pruh pomocí palety. Barvu zvolte tak, aby Vám kombinace všech tří odstínů připadala co
-    nejharmoničtější.</p>
-<p>Pokud se chcete studie zúčastnit, vyplňte prosím dotazník.</p>
-{% endif %}
-<form method="POST" class="post-form">{% csrf_token %}
-    <table>
-        <tr>
-            {{ form }}
-        </tr>
-        <tr>
-        </tr>
-    </table>
-    <br><br><br><br>
-    <p>{{message}}</p>
-    <p>
-        <button class="t1" type="submit">{{next}}</image></button>
-    </p>
-</form>
+    <form id='lang_ru' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='ru'/>
+        <a href='#' title='Russian' onclick="document.getElementById('lang_ru').submit()">
+            Русский
+        </a>
+    </form>
+    <form id='lang_en' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='en'/>
+        <a href='#' title='English' onclick="document.getElementById('lang_en').submit()">
+            English
+        </a>
+    </form>
+    <form id='lang_es' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='es'/>
+        <a href='#' title='Spain' onclick="document.getElementById('lang_es').submit()">
+            Español
+        </a>
+    </form>
+    <form id='lang_ar' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='ar'/>
+        <a href='#' title='Spain' onclick="document.getElementById('lang_ar').submit()">
+            العربية
+        </a>
+    </form>
+    <form id='lang_cz' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='cz'/>
+        <a href='#' title='Cz' onclick="document.getElementById('lang_cz').submit()">
+            Čeština
+        </a>
+    </form>
+    <form id='lang_ind' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='ind'/>
+        <a href='#' title='ind' onclick="document.getElementById('lang_ind').submit()">
+            Indonesian
+        </a>
+    </form>
+    {% if Lg == "en" %}
+        <h4>The <em>ColorLab</em> Research and Educational Center at Smolensk State University is studying the
+            principles of
+            color
+            harmony in urban environments.</h4>
+        <p>In this experiment, we would like to ask which color combinations you personally like.</p>
+        <p>This study takes about 10 minutes. We will show you 5 color charts. Each chart consists of three horizontal
+            stripes
+            of different widths. The colors of the top and bottom stripes are fixed and you cannot change them. You will
+            be
+            asked to select a color for the white (uncolored) stripe in the middle. Choose the color you feel makes the
+            whole
+            combination as harmonious as possible. </p>
+        <p>If you are ready to take part in this study, please fill out the form below.</p>
+    {% endif %}
+    {% if Lg == "ru" %}
+        <h4>Лаборатория цвета Смоленского государственного университета изучает принципы гармоничной колористики
+            города.</h4>
+        <p>В этом эксперименте мы хотим узнать, какие цветовые сочетания нравятся лично Вам.</p>
+        <p>Исследование займет не более 10 минут. Мы покажем Вам 5 цветовых таблиц. Каждая будет состоять из трех
+            горизонтальных
+            полос разной ширины. Цвет верхней и нижней полос будет закреплен, его Вы изменить не сможете. Ваша задача
+            будет
+            заключаться в том, чтобы с помощью курсора выбрать в предложенной палитре цвет для неокрашенной полосы в
+            центре.
+            Цвет нужно подобрать таким образом, чтобы сочетание всех трех оттенков получилось как можно более
+            гармоничным.</p>
+        <p>Если Вы готовы принять участие в исследовании, заполните, пожалуйста, анкету.</p>
+    {% endif %}
+    {% if Lg == "es" %}
+        <h4>El ColorLab del Centro de Investigación y Educación de la Universidad Estatal de Smolensk, estudia los
+            principios de
+            la armonía del color en los entornos urbanos.</h4>
+        <p>En este experimento, queremos averiguar qué combinaciones de colores te gustan, en forma personal.</p>
+        <p>Este estudio dura unos 10 minutos. Te mostraremos 5 cartas de colores. Cada carta consta de tres franjas
+            horizontales
+            de diferente anchura. Los colores de las franjas superior e inferior son fijos y no puedes cambiarlos. Se te
+            pedirá
+            que selecciones un color para la franja blanca (sin color) del centro. Elige este color, para que toda la
+            combinación de colores sea lo más armoniosa posible.</p>
+        <p>Si estás dispuesto a participar en este estudio, por favor, rellena el siguiente formulario.</p>
+    {% endif %}
+    {% if Lg == "ar" %}
+        <h4>يجري معمل دراسات ألألوان في مركز البحوث والتعلم التابع لجامعة ولاية سمولينسك في جمهورية روسيا الأتحادية
+            درسات حول
+            مبادئ تناغم الألوان في المجتمعات والبيئات الحضرية</h4>
+        <p>في هذه الدراسة الحالية نسعى إلى معرفة تركيبات الألوان التي تفضلها شخصياً</p>
+        <p>تستغرق الدراسة الحالية قرابة العشر دقائق لإستكمالها. سيعرض عليك خمس شرائح ، كل شريحة تحتوي على ثلاث أشرطة
+            (خطوط)
+            عرضية بأحجام مختلفة. اللون العلوي والسفلي في كل الشرائح الخمس ثابتة ولا يمكن تغييرها. سيطلب منك تحديد لون
+            الشريط
+            الأبيض في المنتصف. سوف تقوم بإختيار لون لهذا الشريط حتى يكون متناغماً قدر الإمكان مع اللون الذي أعلاه و
+            أسفلة
+        </p>
+        <p>إذا كنت مستعداً للمشاركة في هذه الدراسة ، نأمل منك تعبئة البيانات التالية</p>
+    {% endif %}
+    {% if Lg == "cz" %}
+        <h4>Laboratoř výzkumu barev zkoumá principy harmonické koloristiky města.</h4>
+        <p>V tomto experimentu chceme zjistit, jaké barevné kombinace se Vám osobně líbí.</p>
+        <p>Studie nezabere více než 10 minut. Ukážeme vám 5 barevných schémat. Každé se bude skládat ze tří
+            horizontálních pruhů
+            různé šířky. Barva horního a spodního pruhu bude neměnná a Vaším úkolem bude pomocí kurzoru vybrat barvu pro
+            prostřední bílý pruh pomocí palety. Barvu zvolte tak, aby Vám kombinace všech tří odstínů připadala co
+            nejharmoničtější.</p>
+        <p>Pokud se chcete studie zúčastnit, vyplňte prosím dotazník.</p>
+    {% endif %}
+    {% if Lg == "ind" %}
+        <h4>Pusat Penelitian dan Pendidikan ColorLab di Universitas Negeri Smolensk di Rusia sedang mempelajari prinsip-prinsip harmoni warna di lingkungan perkotaan.</h4>
+        <p>Dalam percobaan ini, kami ingin menanyakan kombinasi warna yang Anda sukai secara pribadi.</p>
+        <p>Penelitian ini membutuhkan waktu sekitar 10 menit. Kami akan menunjukkan kepada Anda 5 bagan warna. Setiap bagan terdiri atas tiga garis horizontal dengan lebar berbeda. Warna garis atas dan bawah sudah ditetapkan dan Anda tidak dapat mengubahnya. Anda akan diminta untuk memilih warna untuk garis putih (tanpa warna) di bagian tengah. Pilih warna yang menurut Anda membuat seluruh kombinasi serasi.</p>
+        <p>Jika Anda siap untuk ikut serta dalam penelitian ini, silakan isi formulir di bawah ini.</p>
+    {% endif %}
+    <form method="POST" class="post-form">{% csrf_token %}
+        <table>
+            <tr>
+                {{ form }}
+            </tr>
+            <tr>
+            </tr>
+        </table>
+        <br><br><br><br>
+        <p>{{ message }}</p>
+        <p>
+            <button class="t1" type="submit">{{ next }}</image></button>
+        </p>
+    </form>
 
-<br><br>
+    <br><br>
 {% endblock %}
 
