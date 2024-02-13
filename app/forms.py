@@ -98,6 +98,7 @@ COU_CHOICES = [
     ('Finland', 'Finland'),
     ('France', 'France'),
     ('Germany', 'Germany'),
+    ('Haiti', 'Haiti'),
     ('India', 'India'),
     ('Indonesia', 'Indonesia'),
     ('Iran', 'Iran'),
