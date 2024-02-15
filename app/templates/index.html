@@ -37,6 +37,12 @@
             Indonesian
         </a>
     </form>
+    <form id='lang_gr' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='gr'/>
+        <a href='#' title='gr' onclick="document.getElementById('lang_gr').submit()">
+            Greek
+        </a>
+    </form>
     {% if Lg == "en" %}
         <h4>The <em>ColorLab</em> Research and Educational Center at Smolensk State University is studying the
             principles of
@@ -108,6 +114,12 @@
         <p>Dalam percobaan ini, kami ingin menanyakan kombinasi warna yang Anda sukai secara pribadi.</p>
         <p>Penelitian ini membutuhkan waktu sekitar 10 menit. Kami akan menunjukkan kepada Anda 5 bagan warna. Setiap bagan terdiri atas tiga garis horizontal dengan lebar berbeda. Warna garis atas dan bawah sudah ditetapkan dan Anda tidak dapat mengubahnya. Anda akan diminta untuk memilih warna untuk garis putih (tanpa warna) di bagian tengah. Pilih warna yang menurut Anda membuat seluruh kombinasi serasi.</p>
         <p>Jika Anda siap untuk ikut serta dalam penelitian ini, silakan isi formulir di bawah ini.</p>
+    {% endif %}
+    {% if Lg == "gr" %}
+        <h4>Το Ερευνητικό και Εκπαιδευτικό Κέντρο ColorLab του Κρατικού Πανεπιστημίου του Σμολένσκ μελετά τις αρχές της χρωματικής αρμονίας σε αστικά περιβάλλοντα.</h4>
+        <p>Σε αυτό το πείραμα, θα θέλαμε να διερευνήσουμε ποιοι συνδυασμοί χρωμάτων σας αρέσουν προσωπικά.</p>
+        <p>Αυτή η μελέτη διαρκεί περίπου 10 λεπτά. Θα σας δείξουμε 5 χρωματικούς πίνακες. Κάθε γράφημα αποτελείται από τρεις οριζόντιες λωρίδες διαφορετικού πλάτους. Τα χρώματα των πάνω και κάτω λωρίδων είναι σταθερά και δεν μπορείτε να τα αλλάξετε. Θα σας ζητηθεί να επιλέξετε ένα χρώμα για τη λευκή (άχρωμη) λωρίδα στη μέση. Επιλέξτε το χρώμα που νιώθετε ότι κάνει όλο τον συνδυασμό όσο πιο αρμονικό γίνεται.</p>
+        <p>Εάν είστε έτοιμοι να λάβετε μέρος σε αυτή τη μελέτη, συμπληρώστε την παρακάτω φόρμα.</p>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         <table>

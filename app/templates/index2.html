@@ -84,6 +84,10 @@
         menurut Anda membuat seluruh kombinasi serasi. Setelah Anda memilih warna, klik "lanjutkan" untuk beralih ke
         halaman berikutnya.</p>
 {% endif %}
+{% if Lg == "gr" %}
+    <p>Χρησιμοποιώντας έναν τροχό χρώματος, επιλέξτε ένα χρώμα για τη λευκή λωρίδα στη μέση. Επιλέξτε το χρώμα που
+        νιώθετε ότι κάνει όλο τον συνδυασμό όσο πιο αρμονικό γίνεται.</p>
+{% endif %}
 <table>
     <tr>
         <td width="1250">
@@ -109,6 +113,9 @@
             {% endif %}
             {% if Lg == "ind" %}
                 <h4>Halaman 2 dari 15</h4>
+            {% endif %}
+            {% if Lg == "gr" %}
+                <h4>Σελίδα 2 από 15</h4>
             {% endif %}
             <div class="colorpicker">
                 <div id="colorpicker1"></div>

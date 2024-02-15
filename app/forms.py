@@ -79,6 +79,19 @@ EDU_CHOICES_IND = [
     ('нет', 'Tidak'),
 ]
 
+SEX_CHOICES_GR = [
+    ('', ''),
+    ('мужской', 'Άνδρας'),  # male, female, other
+    ('женский', 'Γυναίκα'),
+    ('другой', 'Άλλο')
+]
+
+EDU_CHOICES_GR = [
+    ('', ''),
+    ('да', 'ναι'),
+    ('нет', 'όχι'),
+]
+
 COU_CHOICES = [
     ('', ''),
     ('Algeria', 'Algeria'),
@@ -279,7 +292,8 @@ class Client_ColorForm_cz(forms.ModelForm):
             'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
             'Client_shade')
         labels = {
-            'Client_Year': ('Rok narození  :'), 'Client_sex': ('Pohlaví :'), 'Client_country1': ('Země, kde jste se narodil/a :'),
+            'Client_Year': ('Rok narození  :'), 'Client_sex': ('Pohlaví :'),
+            'Client_country1': ('Země, kde jste se narodil/a :'),
             'Client_country2': ('Země trvalého pobytu :'), 'Client_lang': ('Mateřský jazyk :'),
             'Client_edu': ('Umělecké vzdělání :'),
             'Client_shade': ('Máte potíže s vnímáním některých barev?')
@@ -303,6 +317,7 @@ class Client_ColorForm_cz(forms.ModelForm):
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Rok narození :')
 
+
 class Client_ColorForm_ind(forms.ModelForm):
     class Meta:
         model = Client_Color1
@@ -310,10 +325,12 @@ class Client_ColorForm_ind(forms.ModelForm):
             'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
             'Client_shade')
         labels = {
-            'Client_Year': ('Tahun lahir  :'), 'Client_sex': ('Jenis kelamin :'), 'Client_country1': ('Negara kelahiran :'),
+            'Client_Year': ('Tahun lahir  :'), 'Client_sex': ('Jenis kelamin :'),
+            'Client_country1': ('Negara kelahiran :'),
             'Client_country2': ('Negara domisili :'), 'Client_lang': ('Bahasa asli :'),
             'Client_edu': ('Apakah Anda pernah belajar seni sebelumnya? :'),
-            'Client_shade': ('Apakah Anda mengalami kesulitan dalam melihat warna-warna tertentu (misalnya, apakah Anda buta warna)?')
+            'Client_shade': (
+                'Apakah Anda mengalami kesulitan dalam melihat warna-warna tertentu (misalnya, apakah Anda buta warna)?')
         }
         error_messages = {
             'Client_name': {
@@ -333,3 +350,37 @@ class Client_ColorForm_ind(forms.ModelForm):
         self.fields['Client_country2'].choices = COU_CHOICES
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Tahun lahir :')
+
+
+class Client_ColorForm_gr(forms.ModelForm):
+    class Meta:
+        model = Client_Color1
+        fields = (
+            'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
+            'Client_shade')
+        labels = {
+            'Client_Year': ('Έτος γέννησης  :'), 'Client_sex': ('Φύλο :'),
+            'Client_country1': ('Χώρα γέννησης :'),
+            'Client_country2': ('Χώρα κατοικίας :'), 'Client_lang': ('Μητρική γλώσσα :'),
+            'Client_edu': ('Έχετε σπουδάσει τέχνες; :'),
+            'Client_shade': (
+                'Έχετε δυσκολία στο να βλέπετε συγκρεκριμένα χρώματα (π.χ., έχετε αχρωματοψία;)')
+        }
+        error_messages = {
+            'Client_name': {
+                'max_length': ("Value is too long"),
+                'Client_Year': ("Value is too long"),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['Client_sex'].choices = SEX_CHOICES_GR
+        self.fields['Client_edu'].choices = EDU_CHOICES_GR
+        self.fields['Client_shade'].choices = EDU_CHOICES_GR
+
+        self.fields['Client_country1'].choices = COU_CHOICES
+        self.fields['Client_country2'].choices = COU_CHOICES
+
+        self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Έτος γέννησης :')

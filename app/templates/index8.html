@@ -75,6 +75,11 @@
                     <p><input name="left" type="radio" value="yes">Kiri</p>
                     <p><input name="left" type="radio" value="no">Kanan</p>
                 {% endif %}
+                {% if Lg == "gr" %}
+                    <p><b>Ποιος χρωματικός συνδυασμός σας αρέσει περισσότερο, ο αριστερά ή ο δεξιά;</b></p>
+                    <p><input name="left" type="radio" value="yes">αριστερά</p>
+                    <p><input name="left" type="radio" value="no">δεξιά</p>
+                {% endif %}
                 <p style="margin-left: 0px">
                 <p>{{ msg }}</p>
                 <button class="t1" type="submit" id="button">{{ next }}</button>
@@ -101,6 +106,10 @@
                 {% if Lg == "ind" %}
                     <h4>Halaman 8 dari 15</h4>
                 {% endif %}
+                {% if Lg == "gr" %}
+                    <h4>Σελίδα 8 από 15</h4>
+                {% endif %}
+
             </div>
         </td>
     </tr>
