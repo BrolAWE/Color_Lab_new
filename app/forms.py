@@ -124,6 +124,7 @@ COU_CHOICES = [
     ('Japan', 'Japan'),
     ('Korea', 'Korea'),
     ('Latvia', 'Latvia'),
+    ('Mali', 'Mali'),
     ('Mexico', 'Mexico'),
     ('Namibia', 'Namibia'),
     ('Netherlands', 'Netherlands'),
