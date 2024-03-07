@@ -92,6 +92,19 @@ EDU_CHOICES_GR = [
     ('нет', 'όχι'),
 ]
 
+EDU_CHOICES_FR = [
+    ('', ''),
+    ('да', 'oui'),
+    ('нет', 'non'),
+]
+
+SEX_CHOICES_FR = [
+    ('', ''),
+    ('мужской', 'masculin'),  # male, female, other
+    ('женский', 'féminin'),
+    ('другой', 'autre')
+]
+
 COU_CHOICES = [
     ('', ''),
     ('Algeria', 'Algeria'),
@@ -384,3 +397,37 @@ class Client_ColorForm_gr(forms.ModelForm):
         self.fields['Client_country2'].choices = COU_CHOICES
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Έτος γέννησης :')
+
+
+class Client_ColorForm_fr(forms.ModelForm):
+    class Meta:
+        model = Client_Color1
+        fields = (
+            'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
+            'Client_shade')
+        labels = {
+            'Client_Year': ('Année de naissance  :'), 'Client_sex': ('Genre :'),
+            'Client_country1': ('Pays de naissance :'),
+            'Client_country2': ('Pays de résidence :'), 'Client_lang': ('Langue maternelle :'),
+            'Client_edu': ('Avez-vous étudié l’art ? :'),
+            'Client_shade': (
+                'Avez-vous des difficultés à distinguer certaines couleurs (i.e., êtes-vous daltonien)?')
+        }
+        error_messages = {
+            'Client_name': {
+                'max_length': ("Value is too long"),
+                'Client_Year': ("Value is too long"),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['Client_sex'].choices = SEX_CHOICES_FR
+        self.fields['Client_edu'].choices = EDU_CHOICES_FR
+        self.fields['Client_shade'].choices = EDU_CHOICES_FR
+
+        self.fields['Client_country1'].choices = COU_CHOICES
+        self.fields['Client_country2'].choices = COU_CHOICES
+
+        self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Année de naissance :')

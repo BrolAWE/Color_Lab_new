@@ -80,6 +80,11 @@
                     <p><input name="left" type="radio" value="yes">αριστερά</p>
                     <p><input name="left" type="radio" value="no">δεξιά</p>
                 {% endif %}
+                {% if Lg == "fr" %}
+                    <p><b>Quelle combinaison de couleurs préférez-vous, celle de gauche ou celle de droite?</b></p>
+                    <p><input name="left" type="radio" value="yes">gauche</p>
+                    <p><input name="left" type="radio" value="no">droite</p>
+                {% endif %}
                 <p style="margin-left: 0px">
                 <p>{{ msg }}</p>
                 <button class="t1" type="submit" id="button">{{ next }}</button>
@@ -108,6 +113,9 @@
                 {% endif %}
                 {% if Lg == "gr" %}
                     <h4>Σελίδα 9 από 15</h4>
+                {% endif %}
+                {% if Lg == "fr" %}
+                    <h4>page 9 de 15</h4>
                 {% endif %}
             </div>
         </td>

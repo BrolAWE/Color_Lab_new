@@ -123,6 +123,16 @@
     <p>Ο χρόνος για την επιλογή χρώματος δεν είναι περιορισμένος. Μπορείτε να ψάξετε για το σωστό χρώμα μέχρι να το
         βρείτε. Αφού επιλέξετε ένα χρώμα, πατήστε "συνέχεια" για να μεταβείτε στην επόμενη σελίδα.</p>
 {% endif %}
+{% if Lg == "fr" %}
+    <p>À l’aide d’une roue chromatique, veuillez sélectionner une couleur pour la bande blanche qui est au milieu.
+        Choisissez la couleur qui, selon vous, rend l’ensemble aussi harmonieux que possible.</p>
+    <p>La roue chromatique se compose de deux parties. Tout d'abord, en déplaçant le curseur dans un cercle, vous pouvez
+        sélectionner la teinte. Ensuite, en déplaçant le curseur sur le carré intérieur, vous pourrez affiner sa
+        luminosité et sa saturation.</p>
+    <p>Le temps de sélection des couleurs n'est pas limité. Vous pouvez rechercher une couleur nécessaire jusqu'à ce que
+        vous la trouviez. Après avoir sélectionné une couleur, cliquez sur «continuer» pour passer à la page
+        suivante.</p>
+{% endif %}
 <table>
     <tr>
         <td width="1250">
@@ -151,6 +161,9 @@
             {% endif %}
             {% if Lg == "gr" %}
                 <h4>Σελίδα 1 από 15</h4>
+            {% endif %}
+            {% if Lg == "fr" %}
+                <h4>page 1 de 15</h4>
             {% endif %}
             <div class="colorpicker">
                 <div id="colorpicker1"></div>

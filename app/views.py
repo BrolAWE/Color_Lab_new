@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import Client_ColorForm, Client_ColorForm_en, Client_ColorForm_es, Client_ColorForm_ar, Client_ColorForm_cz, \
-    Client_ColorForm_ind, Client_ColorForm_gr
+    Client_ColorForm_ind, Client_ColorForm_gr, Client_ColorForm_fr
 from app.models import Client_Color1
 import datetime
 
@@ -38,6 +38,8 @@ def indexLn(request):
                 next = "LANJUTKAN"
             elif Lg == "gr":
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                next = "Continuer"
             else:
                 next = "ПРОДОЛЖИТЬ"
             return render(request, 'index1.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -79,6 +81,12 @@ def indexLn(request):
                 Lg = 'gr'
                 next = "ΣΥΝΕΧΕΙΑ"
                 msg = 'Αφού απαντήσετε όλες τις ερωτήσεις, πατήστε "συνέχεια" για να πάτε στη σελίδα με την επιλογή χρώματος.'
+            elif request.POST['language'] == 'fr':
+                form = Client_ColorForm_fr()
+                request.session["Lg"] = 'fr'
+                Lg = 'fr'
+                next = "Continuer"
+                msg = 'Après avoir répondu à toutes les questions, cliquez sur « continuer » pour accéder à la page de sélection des couleurs.'
             else:
                 form = Client_ColorForm_en()
                 request.session["Lg"] = 'en'
@@ -159,6 +167,8 @@ def index1(request):
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index2.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -202,6 +212,8 @@ def index2(request):
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index3.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -245,6 +257,8 @@ def index3(request):
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index4.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -288,6 +302,8 @@ def index4(request):
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index5.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -337,6 +353,8 @@ def index5(request):
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index6.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -375,6 +393,9 @@ def index6(request):
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -424,6 +445,8 @@ def index6(request):
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index7.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -460,6 +483,9 @@ def index7(request):  # СТРАНИЦА 2 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -505,6 +531,8 @@ def index7(request):  # СТРАНИЦА 2 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index8.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -541,6 +569,9 @@ def index8(request):  # СТРАНИЦА 3 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -586,6 +617,8 @@ def index8(request):  # СТРАНИЦА 3 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index9.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -622,6 +655,9 @@ def index9(request):  # СТРАНИЦА 4 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -667,6 +703,8 @@ def index9(request):  # СТРАНИЦА 4 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index10.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -703,6 +741,9 @@ def index10(request):  # СТРАНИЦА 5 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -748,6 +789,8 @@ def index10(request):  # СТРАНИЦА 5 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index11.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -784,6 +827,9 @@ def index11(request):  # СТРАНИЦА 6 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -829,6 +875,8 @@ def index11(request):  # СТРАНИЦА 6 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index12.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -865,6 +913,9 @@ def index12(request):  # СТРАНИЦА 7 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -910,6 +961,8 @@ def index12(request):  # СТРАНИЦА 7 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index13.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -946,6 +999,9 @@ def index13(request):  # СТРАНИЦА 8 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -991,6 +1047,8 @@ def index13(request):  # СТРАНИЦА 8 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index14.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -1027,6 +1085,9 @@ def index14(request):  # СТРАНИЦА 9 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -1072,6 +1133,8 @@ def index14(request):  # СТРАНИЦА 9 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index15.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -1108,6 +1171,9 @@ def index15(request):  # СТРАНИЦА 10 с двумя таблицами
             elif Lg == "gr":
                 msg = "Δεν έχετε κάνει καμία επιλογή. Επιλέξτε αριστερά ή δεξιά."
                 next = "ΣΥΝΕΧΕΙΑ"
+            elif Lg == "fr":
+                msg = "Aucune option n'est sélectionnée. Sélectionnez gauche ou droite."
+                next = "Continuer"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -1146,6 +1212,8 @@ def index15(request):  # СТРАНИЦА 10 с двумя таблицами
             next = "LANJUTKAN"
         elif Lg == "gr":
             next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'indexend.html', {'Lg': Lg, 'next': next})

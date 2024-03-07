@@ -43,6 +43,12 @@
             Greek
         </a>
     </form>
+    <form id='lang_fr' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='fr'/>
+        <a href='#' title='fr' onclick="document.getElementById('lang_fr').submit()">
+            French
+        </a>
+    </form>
     {% if Lg == "en" %}
         <h4>The <em>ColorLab</em> Research and Educational Center at Smolensk State University is studying the
             principles of
@@ -120,6 +126,12 @@
         <p>Σε αυτό το πείραμα, θα θέλαμε να διερευνήσουμε ποιοι συνδυασμοί χρωμάτων σας αρέσουν προσωπικά.</p>
         <p>Αυτή η μελέτη διαρκεί περίπου 10 λεπτά. Θα σας δείξουμε 5 χρωματικούς πίνακες. Κάθε γράφημα αποτελείται από τρεις οριζόντιες λωρίδες διαφορετικού πλάτους. Τα χρώματα των πάνω και κάτω λωρίδων είναι σταθερά και δεν μπορείτε να τα αλλάξετε. Θα σας ζητηθεί να επιλέξετε ένα χρώμα για τη λευκή (άχρωμη) λωρίδα στη μέση. Επιλέξτε το χρώμα που νιώθετε ότι κάνει όλο τον συνδυασμό όσο πιο αρμονικό γίνεται.</p>
         <p>Εάν είστε έτοιμοι να λάβετε μέρος σε αυτή τη μελέτη, συμπληρώστε την παρακάτω φόρμα.</p>
+    {% endif %}
+    {% if Lg == "fr" %}
+        <h4>Le centre de recherche et d'enseignement ColorLab de l'Université d'État de Smolensk étudie les principes de l'harmonie des couleurs en milieu urbain.</h4>
+        <p>Dans cette expérience, nous voulons vous savoir quelles combinaisons de couleurs vous plaisent personnellement.</p>
+        <p>Cette étude dure environ 10 minutes. Nous vous montrerons 5 palettes de couleurs. Chacune d'elles se compose de trois bandes horizontales de largeurs différentes. Les couleurs des bandes supérieure et inférieure sont fixées et vous ne pouvez pas les modifier. Il vous faut sélectionner une couleur pour la bande blanche (non colorée) qui est au milieu. Choisissez la couleur qui, selon vous, rend l’ensemble aussi harmonieux que possible.</p>
+        <p>Si vous êtes prêt(e) à participer à cette étude, veuillez remplir le formulaire ci-dessous.</p>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         <table>
