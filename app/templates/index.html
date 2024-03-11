@@ -49,6 +49,12 @@
             French
         </a>
     </form>
+    <form id='lang_ch' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='ch'/>
+        <a href='#' title='ch' onclick="document.getElementById('lang_ch').submit()">
+            Chinese
+        </a>
+    </form>
     {% if Lg == "en" %}
         <h4>The <em>ColorLab</em> Research and Educational Center at Smolensk State University is studying the
             principles of
@@ -132,6 +138,12 @@
         <p>Dans cette expérience, nous voulons vous savoir quelles combinaisons de couleurs vous plaisent personnellement.</p>
         <p>Cette étude dure environ 10 minutes. Nous vous montrerons 5 palettes de couleurs. Chacune d'elles se compose de trois bandes horizontales de largeurs différentes. Les couleurs des bandes supérieure et inférieure sont fixées et vous ne pouvez pas les modifier. Il vous faut sélectionner une couleur pour la bande blanche (non colorée) qui est au milieu. Choisissez la couleur qui, selon vous, rend l’ensemble aussi harmonieux que possible.</p>
         <p>Si vous êtes prêt(e) à participer à cette étude, veuillez remplir le formulaire ci-dessous.</p>
+    {% endif %}
+    {% if Lg == "ch" %}
+        <h4>斯摩蘭斯克國立大學 (Smolensk State University) 的ColorLab研究與教育中心正在進行一項城市環境中色彩和諧原則的研究。</h4>
+        <p>我們想邀請您參與這個實驗調查，請教您個人喜歡哪些色彩組合。</p>
+        <p>本研究大約需時10分鐘。我們將向您展示5張色彩圖形。每張圖由三個高度不同的水平條紋組成。頂部和底部的條紋色彩是固定的，您不能更改它們。我們將請您為中間的白色（未著色）條紋選擇一種色彩。請選擇出您覺得可以使整個組合最為和諧的色彩。</p>
+        <p>如果您已準備好參加這項研究，請填寫下面表格。</p>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         <table>

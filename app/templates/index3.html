@@ -84,7 +84,13 @@
         νιώθετε ότι κάνει όλο τον συνδυασμό όσο πιο αρμονικό γίνεται.</p>
 {% endif %}
 {% if Lg == "fr" %}
-    <p>En utilisant à nouveau une roue chromatique, veuillez sélectionner une couleur pour la bande blanche qui est au milieu. Choisissez la couleur qui, selon vous, rend l’ensemble aussi harmonieux que possible. Après avoir sélectionné une couleur, cliquez sur « continuer » pour passer à la page suivante.</p>
+    <p>En utilisant à nouveau une roue chromatique, veuillez sélectionner une couleur pour la bande blanche qui est au
+        milieu. Choisissez la couleur qui, selon vous, rend l’ensemble aussi harmonieux que possible. Après avoir
+        sélectionné une couleur, cliquez sur « continuer » pour passer à la page suivante.</p>
+{% endif %}
+{% if Lg == "ch" %}
+    <p>
+        請再次使用色彩環為中間的白色條紋選擇一種您覺得可以使整個組合最為和諧的色彩。選擇了色彩後，點擊“繼續continue”進入下一頁。</p>
 {% endif %}
 <table>
     <tr>
@@ -117,6 +123,9 @@
             {% endif %}
             {% if Lg == "fr" %}
                 <h4>page 3 de 15</h4>
+            {% endif %}
+            {% if Lg == "ch" %}
+                <h4>第3頁，共15頁</h4>
             {% endif %}
             <div class="colorpicker">
                 <div id="colorpicker1"></div>

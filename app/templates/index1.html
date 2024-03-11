@@ -133,6 +133,12 @@
         vous la trouviez. Après avoir sélectionné une couleur, cliquez sur «continuer» pour passer à la page
         suivante.</p>
 {% endif %}
+{% if Lg == "ch" %}
+    <p>請自色彩環中為中間的白色條紋挑選一種您覺得可以使整個組合最為和諧的色彩。</p>
+    <p>
+        色彩環由兩部分組成。首先，請移動光標在色環中選擇出色相。然後，移動光標到內部方塊上，您決定色彩的明度和彩度（飽和度）。</p>
+    <p>您可以一直尋找合適的色彩，直到認定找到適合的色彩為止，選色時間不限。選擇了色彩後，請點擊“繼續continue”進入下一頁。</p>
+{% endif %}
 <table>
     <tr>
         <td width="1250">
@@ -164,6 +170,9 @@
             {% endif %}
             {% if Lg == "fr" %}
                 <h4>page 1 de 15</h4>
+            {% endif %}
+            {% if Lg == "ch" %}
+                <h4>第1頁，共15頁</h4>
             {% endif %}
             <div class="colorpicker">
                 <div id="colorpicker1"></div>

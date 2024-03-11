@@ -105,6 +105,19 @@ SEX_CHOICES_FR = [
     ('другой', 'autre')
 ]
 
+EDU_CHOICES_CH = [
+    ('', ''),
+    ('да', '是'),
+    ('нет', '否'),
+]
+
+SEX_CHOICES_CH = [
+    ('', ''),
+    ('мужской', '男'),  # male, female, other
+    ('женский', '女'),
+    ('другой', '其他')
+]
+
 COU_CHOICES = [
     ('', ''),
     ('Algeria', 'Algeria'),
@@ -432,3 +445,37 @@ class Client_ColorForm_fr(forms.ModelForm):
         self.fields['Client_country2'].choices = COU_CHOICES
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Année de naissance :')
+
+
+class Client_ColorForm_ch(forms.ModelForm):
+    class Meta:
+        model = Client_Color1
+        fields = (
+            'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
+            'Client_shade')
+        labels = {
+            'Client_Year': ('出生年份  :'), 'Client_sex': ('性別 :'),
+            'Client_country1': ('出生國家 :'),
+            'Client_country2': ('居住國家 :'), 'Client_lang': ('母語 :'),
+            'Client_edu': ('您之前學過藝術嗎？ :'),
+            'Client_shade': (
+                '您是否有看到特定顏色的困難（您有辨色力異常，俗稱色盲嗎）？')
+        }
+        error_messages = {
+            'Client_name': {
+                'max_length': ("Value is too long"),
+                'Client_Year': ("Value is too long"),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['Client_sex'].choices = SEX_CHOICES_CH
+        self.fields['Client_edu'].choices = EDU_CHOICES_CH
+        self.fields['Client_shade'].choices = EDU_CHOICES_CH
+
+        self.fields['Client_country1'].choices = COU_CHOICES
+        self.fields['Client_country2'].choices = COU_CHOICES
+
+        self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='出生年份 :')

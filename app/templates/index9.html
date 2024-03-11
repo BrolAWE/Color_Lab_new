@@ -85,6 +85,11 @@
                     <p><input name="left" type="radio" value="yes">gauche</p>
                     <p><input name="left" type="radio" value="no">droite</p>
                 {% endif %}
+                {% if Lg == "ch" %}
+                    <p><b>您比較喜歡”左邊left”還是”右邊right”的色彩組合？</b></p>
+                    <p><input name="left" type="radio" value="yes">左</p>
+                    <p><input name="left" type="radio" value="no">右</p>
+                {% endif %}
                 <p style="margin-left: 0px">
                 <p>{{ msg }}</p>
                 <button class="t1" type="submit" id="button">{{ next }}</button>
@@ -116,6 +121,9 @@
                 {% endif %}
                 {% if Lg == "fr" %}
                     <h4>page 9 de 15</h4>
+                {% endif %}
+                {% if Lg == "ch" %}
+                    <h4>第9頁，共15頁</h4>
                 {% endif %}
             </div>
         </td>
