@@ -90,6 +90,11 @@
                     <p><input name="left" type="radio" value="yes">左</p>
                     <p><input name="left" type="radio" value="no">右</p>
                 {% endif %}
+                {% if Lg == "kr" %}
+                    <p><b>왼쪽과 오른쪽 중 어떤 색상 조합이 더 마음에 드시나요?</b></p>
+                    <p><input name="left" type="radio" value="yes">왼쪽</p>
+                    <p><input name="left" type="radio" value="no">오른쪽</p>
+                {% endif %}
                 <p style="margin-left: 0px">
                 <p>{{ msg }}</p>
                 <button class="t1" type="submit" id="button">{{ next }}</button>
@@ -124,6 +129,9 @@
                 {% endif %}
                 {% if Lg == "ch" %}
                     <h4>第6頁，共15頁</h4>
+                {% endif %}
+                {% if Lg == "kr" %}
+                    <h4>15페이지 중 6페이지</h4>
                 {% endif %}
             </div>
         </td>

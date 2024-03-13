@@ -55,6 +55,12 @@
             Chinese
         </a>
     </form>
+    <form id='lang_kr' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='kr'/>
+        <a href='#' title='kr' onclick="document.getElementById('lang_kr').submit()">
+            Korean
+        </a>
+    </form>
     {% if Lg == "en" %}
         <h4>The <em>ColorLab</em> Research and Educational Center at Smolensk State University is studying the
             principles of
@@ -144,6 +150,12 @@
         <p>我們想邀請您參與這個實驗調查，請教您個人喜歡哪些色彩組合。</p>
         <p>本研究大約需時10分鐘。我們將向您展示5張色彩圖形。每張圖由三個高度不同的水平條紋組成。頂部和底部的條紋色彩是固定的，您不能更改它們。我們將請您為中間的白色（未著色）條紋選擇一種色彩。請選擇出您覺得可以使整個組合最為和諧的色彩。</p>
         <p>如果您已準備好參加這項研究，請填寫下面表格。</p>
+    {% endif %}
+    {% if Lg == "ch" %}
+        <h4>스몰렌스크 주립대학교(Smolensk State University)의 ColorLab 연구 및 교육 센터에서는 도시 환경의 색상 조화 원리를 연구하고 있습니다.</h4>
+        <p>이 실험에서는 개인적으로 어떤 색상 조합을 좋아하는지 물어보고자 합니다.</p>
+        <p>본 연구는 약 10분 정도 소요됩니다. 5가지 컬러 차트를 보여드리겠습니다. 각 차트는 너비가 서로 다른 세 개의 가로 줄무늬로 구성됩니다. 상단 및 하단 줄무늬의 색상은 고정되어 있으며 변경할 수 없습니다. 중앙에 있는 흰색(무색) 줄무늬의 색상을 선택하라는 메시지가 표시됩니다. 전체 조합이 가능한 조화를 잘 이룬다고 생각되는 색상을 선택하세요.</p>
+        <p>이 연구에 참여할 준비가되면 아래에 답해주세요</p>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         <table>

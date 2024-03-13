@@ -118,6 +118,19 @@ SEX_CHOICES_CH = [
     ('другой', '其他')
 ]
 
+EDU_CHOICES_KR = [
+    ('', ''),
+    ('да', '예'),
+    ('нет', '아니오'),
+]
+
+SEX_CHOICES_KR = [
+    ('', ''),
+    ('мужской', '남성'),  # male, female, other
+    ('женский', '여성'),
+    ('другой', '기타 성별')
+]
+
 COU_CHOICES = [
     ('', ''),
     ('Algeria', 'Algeria'),
@@ -485,3 +498,37 @@ class Client_ColorForm_ch(forms.ModelForm):
         self.fields['Client_country2'].choices = COU_CHOICES
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='出生年份 :')
+
+
+class Client_ColorForm_kr(forms.ModelForm):
+    class Meta:
+        model = Client_Color1
+        fields = (
+            'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
+            'Client_shade')
+        labels = {
+            'Client_Year': ('태어난해:'), 'Client_sex': ('성별:'),
+            'Client_country1': ('태어난 국가:'),
+            'Client_country2': ('거주 국가:'), 'Client_lang': ('모국어:'),
+            'Client_edu': ('이전에 예술을 공부한 경험이 있습니까?:'),
+            'Client_shade': (
+                '특정 색을 보는데 문제가 있습니까?(예를 들어, 색맹 같은 경우)')
+        }
+        error_messages = {
+            'Client_name': {
+                'max_length': ("Value is too long"),
+                'Client_Year': ("Value is too long"),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['Client_sex'].choices = SEX_CHOICES_KR
+        self.fields['Client_edu'].choices = EDU_CHOICES_KR
+        self.fields['Client_shade'].choices = EDU_CHOICES_KR
+
+        self.fields['Client_country1'].choices = COU_CHOICES
+        self.fields['Client_country2'].choices = COU_CHOICES
+
+        self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='태어난해:')
