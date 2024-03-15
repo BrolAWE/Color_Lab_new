@@ -163,7 +163,6 @@ COU_CHOICES = [
     ('Japan', 'Japan'),
     ('Jordan', 'Jordan'),
     ('Kazakhstan', 'Kazakhstan'),
-    ('Korea', 'Korea'),
     ('Latvia', 'Latvia'),
     ('Mali', 'Mali'),
     ('Mexico', 'Mexico'),
@@ -179,6 +178,7 @@ COU_CHOICES = [
     ('Poland', 'Poland'),
     ('Portugal', 'Portugal'),
     ('Philippines', 'Philippines'),
+    ('Republic of Korea', 'Republic of Korea'),
     ('Romania', 'Romania'),
     ('Russia', 'Russia'),
     ('Saudi Arabia', 'Saudi Arabia'),
@@ -476,9 +476,8 @@ class Client_ColorForm_ch(forms.ModelForm):
             'Client_Year': ('出生年份  :'), 'Client_sex': ('性別 :'),
             'Client_country1': ('出生國家 :'),
             'Client_country2': ('居住國家 :'), 'Client_lang': ('母語 :'),
-            'Client_edu': ('您之前學過藝術嗎？ :'),
-            'Client_shade': (
-                '您是否有看到特定顏色的困難（您有辨色力異常，俗稱色盲嗎）？')
+            'Client_edu': ('您之前學過藝術嗎?'),
+            'Client_shade': ('您是否有看到特定顏色的困難（您有辨色力異常，俗稱色盲嗎)?')
         }
         error_messages = {
             'Client_name': {
@@ -507,12 +506,11 @@ class Client_ColorForm_kr(forms.ModelForm):
             'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
             'Client_shade')
         labels = {
-            'Client_Year': ('태어난해:'), 'Client_sex': ('성별:'),
+            'Client_Year': ('출생년도:'), 'Client_sex': ('성별:'),
             'Client_country1': ('태어난 국가:'),
             'Client_country2': ('거주 국가:'), 'Client_lang': ('모국어:'),
-            'Client_edu': ('이전에 예술을 공부한 경험이 있습니까?:'),
-            'Client_shade': (
-                '특정 색을 보는데 문제가 있습니까?(예를 들어, 색맹 같은 경우)')
+            'Client_edu': ('이전에 예술을 공부한 경험이 있습니까?'),
+            'Client_shade': ('특정 색을 보는데 문제가 있습니까? (예시. 색맹)')
         }
         error_messages = {
             'Client_name': {
