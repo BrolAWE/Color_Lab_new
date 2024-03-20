@@ -1,5 +1,14 @@
 {% extends "base/base.html" %}
 {% load static %}
+{% block head %}
+    <style type="text/css" media="screen">
+        body {
+        {% if Lg == "ar" %}
+            font-size: large;
+        {% endif %}
+        }
+    </style>
+{% endblock %}
 {% block content %}
     <form id='lang_ru' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
         <input type='hidden' name='language' value='ru'/>
@@ -21,7 +30,7 @@
     </form>
     <form id='lang_ar' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
         <input type='hidden' name='language' value='ar'/>
-        <a href='#' title='Spain' onclick="document.getElementById('lang_ar').submit()">
+        <a href='#' title='ar' onclick="document.getElementById('lang_ar').submit()">
             العربية
         </a>
     </form>
@@ -128,33 +137,50 @@
         <p>Pokud se chcete studie zúčastnit, vyplňte prosím dotazník.</p>
     {% endif %}
     {% if Lg == "ind" %}
-        <h4>Pusat Penelitian dan Pendidikan ColorLab di Universitas Negeri Smolensk di Rusia sedang mempelajari prinsip-prinsip harmoni warna di lingkungan perkotaan.</h4>
+        <h4>Pusat Penelitian dan Pendidikan ColorLab di Universitas Negeri Smolensk di Rusia sedang mempelajari
+            prinsip-prinsip harmoni warna di lingkungan perkotaan.</h4>
         <p>Dalam percobaan ini, kami ingin menanyakan kombinasi warna yang Anda sukai secara pribadi.</p>
-        <p>Penelitian ini membutuhkan waktu sekitar 10 menit. Kami akan menunjukkan kepada Anda 5 bagan warna. Setiap bagan terdiri atas tiga garis horizontal dengan lebar berbeda. Warna garis atas dan bawah sudah ditetapkan dan Anda tidak dapat mengubahnya. Anda akan diminta untuk memilih warna untuk garis putih (tanpa warna) di bagian tengah. Pilih warna yang menurut Anda membuat seluruh kombinasi serasi.</p>
+        <p>Penelitian ini membutuhkan waktu sekitar 10 menit. Kami akan menunjukkan kepada Anda 5 bagan warna. Setiap
+            bagan terdiri atas tiga garis horizontal dengan lebar berbeda. Warna garis atas dan bawah sudah ditetapkan
+            dan Anda tidak dapat mengubahnya. Anda akan diminta untuk memilih warna untuk garis putih (tanpa warna) di
+            bagian tengah. Pilih warna yang menurut Anda membuat seluruh kombinasi serasi.</p>
         <p>Jika Anda siap untuk ikut serta dalam penelitian ini, silakan isi formulir di bawah ini.</p>
     {% endif %}
     {% if Lg == "gr" %}
-        <h4>Το Ερευνητικό και Εκπαιδευτικό Κέντρο ColorLab του Κρατικού Πανεπιστημίου του Σμολένσκ μελετά τις αρχές της χρωματικής αρμονίας σε αστικά περιβάλλοντα.</h4>
+        <h4>Το Ερευνητικό και Εκπαιδευτικό Κέντρο ColorLab του Κρατικού Πανεπιστημίου του Σμολένσκ μελετά τις αρχές της
+            χρωματικής αρμονίας σε αστικά περιβάλλοντα.</h4>
         <p>Σε αυτό το πείραμα, θα θέλαμε να διερευνήσουμε ποιοι συνδυασμοί χρωμάτων σας αρέσουν προσωπικά.</p>
-        <p>Αυτή η μελέτη διαρκεί περίπου 10 λεπτά. Θα σας δείξουμε 5 χρωματικούς πίνακες. Κάθε γράφημα αποτελείται από τρεις οριζόντιες λωρίδες διαφορετικού πλάτους. Τα χρώματα των πάνω και κάτω λωρίδων είναι σταθερά και δεν μπορείτε να τα αλλάξετε. Θα σας ζητηθεί να επιλέξετε ένα χρώμα για τη λευκή (άχρωμη) λωρίδα στη μέση. Επιλέξτε το χρώμα που νιώθετε ότι κάνει όλο τον συνδυασμό όσο πιο αρμονικό γίνεται.</p>
+        <p>Αυτή η μελέτη διαρκεί περίπου 10 λεπτά. Θα σας δείξουμε 5 χρωματικούς πίνακες. Κάθε γράφημα αποτελείται από
+            τρεις οριζόντιες λωρίδες διαφορετικού πλάτους. Τα χρώματα των πάνω και κάτω λωρίδων είναι σταθερά και δεν
+            μπορείτε να τα αλλάξετε. Θα σας ζητηθεί να επιλέξετε ένα χρώμα για τη λευκή (άχρωμη) λωρίδα στη μέση.
+            Επιλέξτε το χρώμα που νιώθετε ότι κάνει όλο τον συνδυασμό όσο πιο αρμονικό γίνεται.</p>
         <p>Εάν είστε έτοιμοι να λάβετε μέρος σε αυτή τη μελέτη, συμπληρώστε την παρακάτω φόρμα.</p>
     {% endif %}
     {% if Lg == "fr" %}
-        <h4>Le centre de recherche et d'enseignement ColorLab de l'Université d'État de Smolensk étudie les principes de l'harmonie des couleurs en milieu urbain.</h4>
-        <p>Dans cette expérience, nous voulons vous savoir quelles combinaisons de couleurs vous plaisent personnellement.</p>
-        <p>Cette étude dure environ 10 minutes. Nous vous montrerons 5 palettes de couleurs. Chacune d'elles se compose de trois bandes horizontales de largeurs différentes. Les couleurs des bandes supérieure et inférieure sont fixées et vous ne pouvez pas les modifier. Il vous faut sélectionner une couleur pour la bande blanche (non colorée) qui est au milieu. Choisissez la couleur qui, selon vous, rend l’ensemble aussi harmonieux que possible.</p>
+        <h4>Le centre de recherche et d'enseignement ColorLab de l'Université d'État de Smolensk étudie les principes de
+            l'harmonie des couleurs en milieu urbain.</h4>
+        <p>Dans cette expérience, nous voulons vous savoir quelles combinaisons de couleurs vous plaisent
+            personnellement.</p>
+        <p>Cette étude dure environ 10 minutes. Nous vous montrerons 5 palettes de couleurs. Chacune d'elles se compose
+            de trois bandes horizontales de largeurs différentes. Les couleurs des bandes supérieure et inférieure sont
+            fixées et vous ne pouvez pas les modifier. Il vous faut sélectionner une couleur pour la bande blanche (non
+            colorée) qui est au milieu. Choisissez la couleur qui, selon vous, rend l’ensemble aussi harmonieux que
+            possible.</p>
         <p>Si vous êtes prêt(e) à participer à cette étude, veuillez remplir le formulaire ci-dessous.</p>
     {% endif %}
     {% if Lg == "ch" %}
-        <h4>斯摩蘭斯克國立大學 (Smolensk State University) 的ColorLab研究與教育中心正在進行一項城市環境中色彩和諧原則的研究。</h4>
+        <h4>斯摩蘭斯克國立大學 (Smolensk State University)
+            的ColorLab研究與教育中心正在進行一項城市環境中色彩和諧原則的研究。</h4>
         <p>我們想邀請您參與這個實驗調查，請教您個人喜歡哪些色彩組合。</p>
-        <p>本研究大約需時10分鐘。我們將向您展示5張色彩圖形。每張圖由三個高度不同的水平條紋組成。頂部和底部的條紋色彩是固定的，您不能更改它們。我們將請您為中間的白色（未著色）條紋選擇一種色彩。請選擇出您覺得可以使整個組合最為和諧的色彩。</p>
+        <p>
+            本研究大約需時10分鐘。我們將向您展示5張色彩圖形。每張圖由三個高度不同的水平條紋組成。頂部和底部的條紋色彩是固定的，您不能更改它們。我們將請您為中間的白色（未著色）條紋選擇一種色彩。請選擇出您覺得可以使整個組合最為和諧的色彩。</p>
         <p>如果您已準備好參加這項研究，請填寫下面表格。</p>
     {% endif %}
     {% if Lg == "kr" %}
-<h4>스몰렌스크 주립대학교(Smolensk State University)의 <i>ColorLab 연구 및 교육 센터</i>에서는 도시 환경의 색상 조화 원리를 연구하고 있습니다.</h4>
+        <h4>스몰렌스크 주립대학교(Smolensk State University)의 <i>ColorLab 연구 및 교육 센터</i>에서는 도시 환경의 색상 조화 원리를 연구하고 있습니다.</h4>
         <p>이 실험에서는 개인적으로 어떤 색상 조합을 좋아하는지 물어보고자 합니다.</p>
-        <p>본 연구는 약 10분 정도 소요됩니다. 5가지 컬러 차트를 보여드리겠습니다. 각 차트는 너비가 서로 다른 세 개의 가로 줄무늬로 구성됩니다. 상단 및 하단 줄무늬의 색상은 고정되어 있으며 변경할 수 없습니다. 중앙에 있는 흰색(무색) 줄무늬의 색상을 선택하라는 메시지가 표시됩니다. 전체 조합이 가능한 조화를 잘 이룬다고 생각되는 색상을 선택하세요.</p>
+        <p>본 연구는 약 10분 정도 소요됩니다. 5가지 컬러 차트를 보여드리겠습니다. 각 차트는 너비가 서로 다른 세 개의 가로 줄무늬로 구성됩니다. 상단 및 하단 줄무늬의 색상은 고정되어 있으며 변경할
+            수 없습니다. 중앙에 있는 흰색(무색) 줄무늬의 색상을 선택하라는 메시지가 표시됩니다. 전체 조합이 가능한 조화를 잘 이룬다고 생각되는 색상을 선택하세요.</p>
         <p>이 연구에 참여할 준비가되면 아래에 답해주세요</p>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
