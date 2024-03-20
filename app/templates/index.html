@@ -4,7 +4,7 @@
     <style type="text/css" media="screen">
         body {
         {% if Lg == "ar" %}
-            font-size: large;
+            font-size: xx-large;
         {% endif %}
         }
     </style>
@@ -30,7 +30,7 @@
     </form>
     <form id='lang_ar' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
         <input type='hidden' name='language' value='ar'/>
-        <a href='#' title='ar' onclick="document.getElementById('lang_ar').submit()">
+        <a href='#' title='ar' onclick="document.getElementById('lang_ar').submit()" style="font-size: xx-large">
             العربية
         </a>
     </form>
@@ -55,7 +55,7 @@
     <form id='lang_fr' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
         <input type='hidden' name='language' value='fr'/>
         <a href='#' title='fr' onclick="document.getElementById('lang_fr').submit()">
-            French
+            Français
         </a>
     </form>
     <form id='lang_ch' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
