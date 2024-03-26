@@ -131,6 +131,19 @@ SEX_CHOICES_KR = [
     ('другой', '기타 성별')
 ]
 
+EDU_CHOICES_IC = [
+    ('', ''),
+    ('да', 'já'),
+    ('нет', 'nei'),
+]
+
+SEX_CHOICES_IC = [
+    ('', ''),
+    ('мужской', 'karlkyns'),  # male, female, other
+    ('женский', 'kvenkyns'),
+    ('другой', 'annað')
+]
+
 COU_CHOICES = [
     ('', ''),
     ('Algeria', 'Algeria'),
@@ -517,7 +530,7 @@ class Client_ColorForm_kr(forms.ModelForm):
             'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
             'Client_shade')
         labels = {
-            'Client_Year': ('출생년도:'), 'Client_sex': ('성별:'),
+            'Client_Year': ('태어난해:'), 'Client_sex': ('성별:'),
             'Client_country1': ('태어난 국가:'),
             'Client_country2': ('거주 국가:'), 'Client_lang': ('모국어:'),
             'Client_edu': ('이전에 예술을 공부한 경험이 있습니까?'),
@@ -541,3 +554,36 @@ class Client_ColorForm_kr(forms.ModelForm):
         self.fields['Client_country2'].choices = COU_CHOICES
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='태어난해:')
+
+
+class Client_ColorForm_ic(forms.ModelForm):
+    class Meta:
+        model = Client_Color1
+        fields = (
+            'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
+            'Client_shade')
+        labels = {
+            'Client_Year': ('Fæðingarár:'), 'Client_sex': ('Kyn:'),
+            'Client_country1': ('Fæðingarland:'),
+            'Client_country2': ('Búsetuland:'), 'Client_lang': ('Móðurmál:'),
+            'Client_edu': ('Ertu menntað/ur/uð í listum?'),
+            'Client_shade': ('Á í erfiðleikum með að sjá einhver litbrigði (svo sem vegna litblindu)?')
+        }
+        error_messages = {
+            'Client_name': {
+                'max_length': ("Value is too long"),
+                'Client_Year': ("Value is too long"),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['Client_sex'].choices = SEX_CHOICES_IC
+        self.fields['Client_edu'].choices = EDU_CHOICES_IC
+        self.fields['Client_shade'].choices = EDU_CHOICES_IC
+
+        self.fields['Client_country1'].choices = COU_CHOICES
+        self.fields['Client_country2'].choices = COU_CHOICES
+
+        self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Fæðingarár:')

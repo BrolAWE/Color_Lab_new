@@ -95,6 +95,11 @@
                     <p><input name="left" type="radio" value="yes">왼쪽</p>
                     <p><input name="left" type="radio" value="no">오른쪽</p>
                 {% endif %}
+                {% if Lg == "ic" %}
+                    <p><b>Hvaða samsetning finnst þér betri, sú til vinstri eða hægri?</b></p>
+                    <p><input name="left" type="radio" value="yes">vinstri</p>
+                    <p><input name="left" type="radio" value="no">hægri</p>
+                {% endif %}
                 <p style="margin-left: 0px">
                 <p>{{ msg }}</p>
                 <button class="t1" type="submit" id="button">{{ next }}</button>
@@ -133,6 +138,9 @@
                 {% if Lg == "kr" %}
                     <h4>15페이지 중 8페이지</h4>
                 {% endif %}
+            {% if Lg == "ic" %}
+                <h4>síða 8 af 15</h4>
+            {% endif %}
 
             </div>
         </td>

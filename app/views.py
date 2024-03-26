@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import Client_ColorForm, Client_ColorForm_en, Client_ColorForm_es, Client_ColorForm_ar, Client_ColorForm_cz, \
-    Client_ColorForm_ind, Client_ColorForm_gr, Client_ColorForm_fr, Client_ColorForm_ch, Client_ColorForm_kr
+    Client_ColorForm_ind, Client_ColorForm_gr, Client_ColorForm_fr, Client_ColorForm_ch, Client_ColorForm_kr, Client_ColorForm_ic
 from app.models import Client_Color1
 import datetime
 
@@ -44,6 +44,8 @@ def indexLn(request):
                 next = "繼續"
             elif Lg == "kr":
                 next = "계속"
+            elif Lg == "ic":
+                next = "Halda áfram"
             else:
                 next = "ПРОДОЛЖИТЬ"
             return render(request, 'index1.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -103,6 +105,12 @@ def indexLn(request):
                 Lg = 'kr'
                 next = "계속"
                 msg = '모든 질문에 답한 후 "계속"을 클릭하여 색상 선택 페이지로 이동하세요.'
+            elif request.POST['language'] == 'ic':
+                form = Client_ColorForm_ic()
+                request.session["Lg"] = 'ic'
+                Lg = 'ic'
+                next = "Halda áfram"
+                msg = 'Smelltu á "Halda áfram" til að hefja litarannsóknina, þegar þú hefur lokið við að svara spurningunum.'
             else:
                 form = Client_ColorForm_en()
                 request.session["Lg"] = 'en'
@@ -189,6 +197,8 @@ def index1(request):
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index2.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -238,6 +248,8 @@ def index2(request):
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index3.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -287,6 +299,8 @@ def index3(request):
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index4.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -336,6 +350,8 @@ def index4(request):
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index5.html', {'message': msg, 'Lg': Lg, 'next': next})
@@ -391,6 +407,8 @@ def index5(request):
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index6.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -438,6 +456,9 @@ def index6(request):
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -493,6 +514,8 @@ def index6(request):
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index7.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -538,6 +561,9 @@ def index7(request):  # СТРАНИЦА 2 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -589,6 +615,8 @@ def index7(request):  # СТРАНИЦА 2 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index8.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -634,6 +662,9 @@ def index8(request):  # СТРАНИЦА 3 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -685,6 +716,8 @@ def index8(request):  # СТРАНИЦА 3 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index9.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -730,6 +763,9 @@ def index9(request):  # СТРАНИЦА 4 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -781,6 +817,8 @@ def index9(request):  # СТРАНИЦА 4 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index10.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -826,6 +864,9 @@ def index10(request):  # СТРАНИЦА 5 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -877,6 +918,8 @@ def index10(request):  # СТРАНИЦА 5 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index11.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -922,6 +965,9 @@ def index11(request):  # СТРАНИЦА 6 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -973,6 +1019,8 @@ def index11(request):  # СТРАНИЦА 6 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index12.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -1018,6 +1066,9 @@ def index12(request):  # СТРАНИЦА 7 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -1069,6 +1120,8 @@ def index12(request):  # СТРАНИЦА 7 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index13.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -1114,6 +1167,9 @@ def index13(request):  # СТРАНИЦА 8 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -1165,6 +1221,8 @@ def index13(request):  # СТРАНИЦА 8 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index14.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -1210,6 +1268,9 @@ def index14(request):  # СТРАНИЦА 9 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -1261,6 +1322,8 @@ def index14(request):  # СТРАНИЦА 9 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'index15.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
@@ -1306,6 +1369,9 @@ def index15(request):  # СТРАНИЦА 10 с двумя таблицами
             elif Lg == "kr":
                 msg = "옵션이 선택되지 않았습니다. 왼쪽 또는 오른쪽을 선택합니다."
                 next = "계속"
+            elif Lg == "ic":
+                msg = "Ekkert valið. Veldu annað hvort vinstri eða hægri."
+                next = "Halda áfram"
             else:
                 msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
                 next = "ПРОДОЛЖИТЬ"
@@ -1350,6 +1416,8 @@ def index15(request):  # СТРАНИЦА 10 с двумя таблицами
             next = "繼續"
         elif Lg == "kr":
             next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
         else:
             next = "ПРОДОЛЖИТЬ"
         return render(request, 'indexend.html', {'Lg': Lg, 'next': next})
