@@ -567,7 +567,7 @@ class Client_ColorForm_ic(forms.ModelForm):
             'Client_country1': ('Fæðingarland:'),
             'Client_country2': ('Búsetuland:'), 'Client_lang': ('Móðurmál:'),
             'Client_edu': ('Ertu menntað/ur/uð í listum?'),
-            'Client_shade': ('Á í erfiðleikum með að sjá einhver litbrigði (svo sem vegna litblindu)?')
+            'Client_shade': ('Áttu í erfiðleikum með að sjá einhver litbrigði (svo sem vegna litblindu)?')
         }
         error_messages = {
             'Client_name': {
