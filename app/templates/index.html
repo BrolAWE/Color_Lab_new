@@ -76,6 +76,12 @@
             Icelandic
         </a>
     </form>
+    <form id='lang_srb' action="{% url 'indexLn' %}" method='POST'>{% csrf_token %}
+        <input type='hidden' name='language' value='srb'/>
+        <a href='#' title='srb' onclick="document.getElementById('lang_srb').submit()">
+            Serbian
+        </a>
+    </form>
     {% if Lg == "en" %}
         <h4>The <em>ColorLab</em> Research and Educational Center at Smolensk State University is studying the
             principles of
@@ -190,10 +196,16 @@
         <p>이 연구에 참여할 준비가되면 아래에 답해주세요</p>
     {% endif %}
     {% if Lg == "ic" %}
-<h4>Rannsókna- og menntunarsetrið <i>ColorLab</i> við Smolensk Háskóla er að rannsaka reglur litasamræmis.</h4>
+        <h4>Rannsókna- og menntunarsetrið <i>ColorLab</i> við Smolensk Háskóla er að rannsaka reglur litasamræmis.</h4>
         <p>Í þessari rannsókn viljum við vita hvaða litasamsetningar þér líkar best.</p>
         <p>Rannsóknin tekur um 10 mínútur. Þér verða sýnd 5 litaspjöld. Á hverju spjaldi eru þrjár misþykkar, láréttar rendur. Litunum á efri og neðri röndinni er ekki hægt að breyta, en þú verður beðin/nn/ð um a velja lit á hvítu (ólituðu) röndina sem er á milli hinna tveggja. Veldu þann lit sem þér finnst mynda best samræmi á milli randanna þriggja.</p>
         <p>Vinsamlegast fylltu út eftirfarandi reiti, ef þú er tilbúin/nn/ð að taka þátt í rannsókninni.</p>
+    {% endif %}
+    {% if Lg == "srb" %}
+        <h4>ColorLab istraživački i obrazovni centar Smolenskog državnog univerziteta proučava principe harmonije boja u urbanom okruženju</h4>
+        <p>U ovom eksperimentu, želimo da saznamo koje kombinacije boja vam se dopadaju.</p>
+        <p>Ovo istraživanje traje oko deset minuta. Prikazaćemo vam pet paleta boja. Svaka paleta se sastoji od tri horizontalne pruge različite širine. Boje gornje i donje pruge su fiksirane i njih ne možete menjati. Vaš zadatak će biti da izaberete boju za belu (neobojenu) prugu u sredini. Izaberite onu boju za koju smatrate da najviše doprinosi harmoniji boja cele kombinacije.</p>
+        <p>Ako ste spremni da učestvujete u ovom istraživanju, molimo vas da popunite upitnik koji sledi.</p>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         <table>

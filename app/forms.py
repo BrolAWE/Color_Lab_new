@@ -144,6 +144,19 @@ SEX_CHOICES_IC = [
     ('другой', 'annað')
 ]
 
+EDU_CHOICES_SRB = [
+    ('', ''),
+    ('да', 'da'),
+    ('нет', 'ne'),
+]
+
+SEX_CHOICES_SRB = [
+    ('', ''),
+    ('мужской', 'muški'),  # male, female, other
+    ('женский', 'ženski'),
+    ('другой', 'drugo')
+]
+
 COU_CHOICES = [
     ('', ''),
     ('Algeria', 'Algeria'),
@@ -587,3 +600,36 @@ class Client_ColorForm_ic(forms.ModelForm):
         self.fields['Client_country2'].choices = COU_CHOICES
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Fæðingarár:')
+
+
+class Client_ColorForm_srb(forms.ModelForm):
+    class Meta:
+        model = Client_Color1
+        fields = (
+            'Client_id', 'Client_Year', 'Client_sex', 'Client_country1', 'Client_country2', 'Client_lang', 'Client_edu',
+            'Client_shade')
+        labels = {
+            'Client_Year': ('Godina rođenja:'), 'Client_sex': ('Pol:'),
+            'Client_country1': ('Zemlja rođenja:'),
+            'Client_country2': ('Zemlja u kojoj živite:'), 'Client_lang': ('Maternji jezik:'),
+            'Client_edu': ('Da li ste studirali umetnost?'),
+            'Client_shade': ('Da li imate problem sa razlikovanjem nekih boja? (na primer, da li imate neku formu daltonizma?)')
+        }
+        error_messages = {
+            'Client_name': {
+                'max_length': ("Value is too long"),
+                'Client_Year': ("Value is too long"),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['Client_sex'].choices = SEX_CHOICES_SRB
+        self.fields['Client_edu'].choices = EDU_CHOICES_SRB
+        self.fields['Client_shade'].choices = EDU_CHOICES_SRB
+
+        self.fields['Client_country1'].choices = COU_CHOICES
+        self.fields['Client_country2'].choices = COU_CHOICES
+
+        self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Godina rođenja:')
