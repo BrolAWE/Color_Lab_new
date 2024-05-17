@@ -78,6 +78,7 @@ COU_CHOICES = [
     ('Spain', 'Spain'),
     ('Sweden', 'Sweden'),
     ('Switzerland', 'Switzerland'),
+    ('Tadjikistan', 'Tadjikistan'),
     ('Taiwan', 'Taiwan'),
     ('Thailand', 'Thailand'),
     ('Togo', 'Togo'),
