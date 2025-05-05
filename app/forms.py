@@ -168,6 +168,7 @@ COU_CHOICES = [
     ('Bangladesh', 'Bangladesh'),
     ('Belarus', 'Belarus'),
     ('Belgium', 'Belgium'),
+    ('Bolivia', 'Bolivia'),
     ('Brazil', 'Brazil'),
     ('Bulgaria', 'Bulgaria'),
     ('Canada', 'Canada'),
