@@ -198,6 +198,7 @@ COU_CHOICES = [
     ('Kazakhstan', 'Kazakhstan'),
     ('Kenya', 'Kenya'),
     ('Latvia', 'Latvia'),
+    ('Malaysia', 'Malaysia'),
     ('Mali', 'Mali'),
     ('Mexico', 'Mexico'),
     ('Mongolia', 'Mongolia'),

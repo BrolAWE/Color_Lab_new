@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import Client_ColorForm, Client_ColorForm_en, Client_ColorForm_es, Client_ColorForm_ar, Client_ColorForm_cz, \
-    Client_ColorForm_ind, Client_ColorForm_gr, Client_ColorForm_fr, Client_ColorForm_ch, Client_ColorForm_kr, Client_ColorForm_ic, Client_ColorForm_srb
+    Client_ColorForm_ind, Client_ColorForm_gr, Client_ColorForm_fr, Client_ColorForm_ch, Client_ColorForm_kr, \
+    Client_ColorForm_ic, Client_ColorForm_srb
 from app.models import Client_Color1
 import datetime
 
@@ -1500,6 +1501,16 @@ def indexend(request):
     print(msg)
     Lg = request.session["Lg"]
     return render(request, 'indexend.html', {'Lg': Lg})
+
+
+def russias_regions(request):
+    msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+    if request.method == "POST":
+        form = Client_ColorForm(request.POST)
+        Lg = 'ru'
+        next = "ПРОДОЛЖИТЬ"
+        msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+    return render(request, 'russias_regions.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
 
 
 def export_xls(request):
