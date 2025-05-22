@@ -23,6 +23,8 @@ urlpatterns = [
     path('page15/', views.index14, name='index14'),
     path('page_end/', views.index15, name='index15'),
     path('indexend/', views.indexend, name='indexend'),
-    path('russias_regions/', views.russias_regions, name='russias_regions'),
     path('export_xls/', views.export_xls, name='export_xls'),
+    path('russias_regions/', views.russias_regions, name='russias_regions'),
+    path('fav_color/', views.fav_color, name='fav_color'),
+    path('export_regions_xls/', views.export_regions_xls, name='export_regions_xls'),
 ]

@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import Client_ColorForm, Client_ColorForm_en, Client_ColorForm_es, Client_ColorForm_ar, Client_ColorForm_cz, \
     Client_ColorForm_ind, Client_ColorForm_gr, Client_ColorForm_fr, Client_ColorForm_ch, Client_ColorForm_kr, \
-    Client_ColorForm_ic, Client_ColorForm_srb
-from app.models import Client_Color1
+    Client_ColorForm_ic, Client_ColorForm_srb, Client_ColorForm_reg
+from app.models import Client_Color1, Client_Color2
 import datetime
 
 
@@ -1503,16 +1503,6 @@ def indexend(request):
     return render(request, 'indexend.html', {'Lg': Lg})
 
 
-def russias_regions(request):
-    msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
-    if request.method == "POST":
-        form = Client_ColorForm(request.POST)
-        Lg = 'ru'
-        next = "ПРОДОЛЖИТЬ"
-        msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
-    return render(request, 'russias_regions.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
-
-
 def export_xls(request):
     import xlwt
     response = HttpResponse(content_type='application/ms-excel')
@@ -1547,6 +1537,112 @@ def export_xls(request):
             ws.write(row_num, col_num, row[col_num], font_style)
     wb.save(response)
     return response
+
+# СУБЪЕКТЫ РФ
+
+
+def russias_regions(request):
+    msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+    if request.method == "POST":
+        form = Client_ColorForm_reg(request.POST)
+        print("мы тут")
+        if form.is_valid():
+            print("в if провалились")
+            print("а форму не сохранили")
+            client = form.save()  # commit=False)
+            print("и форму сохранили")
+            print(client.Client_sex)
+            print(client.Client_edu)
+            print(client.Client_Year)
+            msg = client.Client_id
+            # Set a session value:
+            request.session["User_id"] = client.Client_id
+            # добавила Самойлова 24.5.22
+            key = client.Client_id
+            current_user = Client_Color2.objects.get(pk=key)
+            date = datetime.datetime.today()
+            current_user.color_like = date.strftime("%m/%d/%Y, %H:%M:%S")
+            current_user.save(update_fields=['color_like'])
+            # конец добавки
+            Lg = "ru"
+            next = "ПРОДОЛЖИТЬ"
+            return render(request, 'fav_color.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        form = Client_ColorForm_reg()
+        request.session["Lg"] = "ru"
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+    return render(request, 'russias_regions.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+
+
+def fav_color(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color_like.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color_like = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color_like'])  # изменила самойлова 24.5.22
+        print(current_user.color_like)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color_dislike = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color_dislike'])
+        print(current_user.color_dislike)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'fav_color.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'fav_color.html')
+
+
+def export_regions_xls(request):
+    import xlwt
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="Canvas_regions.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('canvas list')  # this will make a sheet named Users Data
+    # Sheet header, first row
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+    columns = ['id', 'Year',
+               'sex', 'country1', 'country2', 'region', 'lang',
+               'edu', 'shade', 'color_like', 'color_dislike', 'color1', 'color2', 'color3', 'color4', 'color5',
+               'choice1', 'choice2', 'choice3', 'choice4', 'choice5', 'choice6', 'choice7', 'choice8', 'choice9',
+               'choice10', ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+    rows = Client_Color2.objects.order_by('Client_id').values_list('Client_id', 'Client_Year',
+                                                                   'Client_sex', 'Client_country1', 'Client_country2',
+                                                                   'Client_region',
+                                                                   'Client_lang',
+                                                                   'Client_edu', 'Client_shade',
+                                                                   'color_like', 'color_dislike',
+                                                                   'color1', 'color2',
+                                                                   'color3', 'color4',
+                                                                   'color5',
+                                                                   'left1', 'left2', 'left3', 'left4', 'left5', 'left6',
+                                                                   'left7', 'left8',
+                                                                   'left9', 'left10', )
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+    wb.save(response)
+    return response
 # http://127.0.0.1:8000/
 # http://127.0.0.1:8000/export_xls/
+# http://127.0.0.1:8000/export_regions_xls/
 # python manage.py runserver

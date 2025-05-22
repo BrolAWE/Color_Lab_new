@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="{% static 'scripts/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/excanvas.compiled.js' %}"></script>
+    <title>SMOLGU. ColorLab</title>
+    <script type="text/javascript" charset="utf-8" src="{% static 'src/farbtastic.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function () {
+            $('#colorpicker1').farbtastic('#color1');
+            $('#colorpicker2').farbtastic({callback: '#color2', width: 150});
+        });
+    </script>
+    <style type="text/css" media="screen">
+        .colorpicker {
+            float: left;
+            margin: 1em;
+        }
+
+        form {
+            margin: 2em 1em;
+            text-align: center;
+        }
+
+        body {
+            font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            background-color: gray;
+            color: #FFF;
+            display: block;
+            margin: 8px;
+        {% if Lg == "ar" %}
+            font-size: xx-large;
+        {% endif %}
+        }
+
+        p {
+            clear: both;
+        }
+
+        button.t1 {
+            background-color: #808080;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 12px 42px;
+            border-radius: 10px;
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+{% if Lg == "ru" %}
+    <p>Выберите, пожалуйста, в предложенной палитре цвет для неокрашенной
+        полосы в центре. Цвет нужно подобрать таким образом, чтобы сочетание всех
+        трех оттенков получилось как можно более гармоничным.</p>
+    <p>Палитра состоит из двух частей. Сначала, двигая курсор по кругу,
+        нужно выбрать тон оттенка. Потом, перемещая курсор по внутреннему квадрату –
+        уточнить его яркость и насыщенность. </p>
+    <p>Время выбора не ограничено. Вы можете искать нужный вариант до тех пор,
+        пока не найдете. Когда Вы выберете оттенок, нажмите «продолжить»,
+        чтобы перейти к следующей странице. </p>
+{% endif %}
+<table>
+    <tr>
+        <td width="1250">
+            <canvas id="myCanvas" width="1200" height="780" style="border:0px solid #000000;"></canvas>
+        </td>
+        <td width="200">
+            {% if Lg == "ru" %}
+                <h4>страница 1 из 15</h4>
+            {% endif %}
+            <div class="colorpicker">
+                <div id="colorpicker1"></div>
+                <form action="{% url 'fav_color' %}" method="POST" class="post-form"> {% csrf_token %}
+                    <p style="margin-left: 0px"><input type="text" id="color1" name="mycolor" value="#FFFFFF"/></p>
+                    <br><br><br><br>
+                    <p style="margin-left: 0px">
+                        <button class="t1" type="submit">{{ next }}</button>
+                    </p>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<script>
+    $('#color1').change(function () {
+        var x = $(this).val();
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+
+        ctx.fillStyle = x; //#FF0000";
+        ctx.fillRect(0, 0, 1200, 780);
+    });
+
+
+</script>
+</body>
+</html>
+

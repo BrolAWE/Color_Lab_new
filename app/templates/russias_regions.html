@@ -1,9 +1,16 @@
 {% extends "base/base.html" %}
 {% load static %}
 {% block head %}
-
+    <style type="text/css" media="screen">
+        body {
+        {% if Lg == "ar" %}
+            font-size: xx-large;
+        {% endif %}
+        }
+    </style>
 {% endblock %}
 {% block content %}
+    {% if Lg == "ru" %}
         <h4>Лаборатория цвета Смоленского государственного университета изучает принципы гармоничной колористики
             города.</h4>
         <p>В этом эксперименте мы хотим узнать, какие цветовые сочетания нравятся лично Вам.</p>
@@ -16,6 +23,7 @@
             Цвет нужно подобрать таким образом, чтобы сочетание всех трех оттенков получилось как можно более
             гармоничным.</p>
         <p>Если Вы готовы принять участие в исследовании, заполните, пожалуйста, анкету.</p>
+    {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         <table>
             <tr>
@@ -30,6 +38,5 @@
             <button class="t1" type="submit">{{ next }}</image></button>
         </p>
     </form>
-
     <br><br>
 {% endblock %}

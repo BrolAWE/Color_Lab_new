@@ -1,5 +1,6 @@
 from django import forms
 from .models import Client_Color1
+from .models import Client_Color2
 
 SEX_CHOICES_EN = [
     ('', ''),
@@ -186,6 +187,7 @@ COU_CHOICES = [
     ('Gabon', 'Gabon'),
     ('Georgia', 'Georgia'),
     ('Germany', 'Germany'),
+    ('Ghana', 'Ghana'),
     ('Greece', 'Greece'),
     ('Haiti', 'Haiti'),
     ('Iceland', 'Iceland'),
@@ -240,6 +242,46 @@ COU_CHOICES = [
     ('Other', 'Other'),
 ]
 
+REG_CHOICES = [
+    ('', ''),
+    ('Алтайский край', 'Алтайский край'),
+    ('Амурская область', 'Амурская область'),
+    ('Архангельская область', 'Архангельская область'),
+    ('Вологодская область', 'Вологодская область'),
+    ('Забайкальский край', 'Забайкальский край'),
+    ('Калининградская область', 'Калининградская область'),
+    ('Камчатский край', 'Камчатский край'),
+    ('Краснодарский край', 'Краснодарский край'),
+    ('Красноярский край', 'Красноярский край'),
+    ('Луганская народная республика', 'Луганская народная республика'),
+    ('Оренбургская область', 'Оренбургская область'),
+    ('Пермский край', 'Пермский край'),
+    ('Приморский край', 'Приморский край'),
+    ('Республика Адыгея', 'Республика Адыгея'),
+    ('Республика Башкортостан', 'Республика Башкортостан'),
+    ('Республика Бурятия', 'Республика Бурятия'),
+    ('Республика Дагестан', 'Республика Дагестан'),
+    ('Республика Ингушетия', 'Республика Ингушетия'),
+    ('Республика Кабардино-Балкария', 'Республика Кабардино-Балкария'),
+    ('Республика Калмыкия', 'Республика Калмыкия'),
+    ('Республика Карачаево-Черкесия', 'Республика Карачаево-Черкесия'),
+    ('Республика Карелия', 'Республика Карелия'),
+    ('Республика Коми', 'Республика Коми'),
+    ('Республика Крым', 'Республика Крым'),
+    ('Республика Марий Эл', 'Республика Марий Эл'),
+    ('Республика Мордовия', 'Республика Мордовия'),
+    ('Республика Саха (Якутия)', 'Республика Саха (Якутия)'),
+    ('Республика Северная Осетия', 'Республика Северная Осетия'),
+    ('Республика Татарстан', 'Республика Татарстан'),
+    ('Республика Тыва', 'Республика Тыва'),
+    ('Республика Удмуртия', 'Республика Удмуртия'),
+    ('Республика Хакасия', 'Республика Хакасия'),
+    ('Ставропольский край', 'Ставропольский край'),
+    ('Хабаровский край', 'Хабаровский край'),
+    ('Чеченская Республика', 'Чеченская Республика'),
+    ('Чувашская Республика', 'Чувашская Республика'),
+]
+
 
 class Client_ColorForm(forms.ModelForm):
     class Meta:
@@ -272,6 +314,44 @@ class Client_ColorForm(forms.ModelForm):
         self.fields['Client_country2'].choices = COU_CHOICES
 
         self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940, label='Год Вашего рождения :')
+
+
+class Client_ColorForm_reg(forms.ModelForm):
+    class Meta:
+        model = Client_Color2
+        fields = (
+            'Client_id', 'Client_Year', 'Client_sex',
+            'Client_country1', 'Client_country2', 'Client_region',
+            'Client_lang', 'Client_edu', 'Client_shade')
+        labels = {
+            'Client_Year': ('Год Вашего рождения :'), 'Client_sex': ('Ваш пол :'),
+            'Client_country1': ('Страна рождения :'),
+            'Client_country2': ('Страна постоянного проживания :'),
+            'Client_region': ('Субъект РФ :'),
+            'Client_lang': ('Родной язык :'),
+            'Client_edu': ('Художественное образование :'),
+            'Client_shade': ('Испытываете ли Вы сложности с восприятием каких-либо оттенков?')
+        }
+        error_messages = {
+            'Client_name': {
+                'max_length': ("Значение слишком длинное"),
+                'Client_Year': ("Значение слишком длинное"),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['Client_sex'].choices = SEX_CHOICES_RU
+        self.fields['Client_edu'].choices = EDU_CHOICES_RU
+        self.fields['Client_shade'].choices = EDU_CHOICES_RU
+
+        self.fields['Client_country1'].choices = COU_CHOICES
+        self.fields['Client_country2'].choices = COU_CHOICES
+        self.fields['Client_region'].choices = REG_CHOICES
+
+        self.fields['Client_Year'] = forms.IntegerField(max_value=2010, min_value=1940,
+                                                        label='Год Вашего рождения :')
 
 
 class Client_ColorForm_en(forms.ModelForm):
