@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="{% static 'scripts/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/excanvas.compiled.js' %}"></script>
+    <title>SMOLGU. ColorLab</title>
+    <style type="text/css" media="screen">
+        .colorpicker {
+            float: left;
+            margin: 1em;
+        }
+
+        form {
+            margin: 2em 1em 0 1;
+            text-align: center;
+        }
+
+        body {
+            font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            background-color: gray;
+            color: #FFF;
+            display: block;
+            margin: 8px;
+        {% if Lg == "ar" %}
+            font-size: xx-large;
+        {% endif %}
+        }
+
+        p {
+            clear: both;
+        }
+
+        button.t1 {
+            background-color: #808080;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 12px 42px;
+            border-radius: 10px;
+            font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <td width="700">
+            <form action="{% url 'choice9' %}" method="POST"> {% csrf_token %}
+                {% if Lg == "ru" %}
+                    <p><b>Какое сочетание цветов Вам нравится больше, слева или справа?</b></p>
+                    <p><input name="left" type="radio" value="yes"> слева </p>
+                    <p><input name="left" type="radio" value="no"> справа</p>
+                {% endif %}
+                <p style="margin-left: 0px">
+                <p>{{ msg }}</p>
+                <button class="t1" type="submit" id="button">{{ next }}</button>
+                </p>
+            </form>
+        </td>
+        <td width="700">
+            <div style="float: right;">
+                {% if Lg == "ru" %}
+                    <h4>выбор 9 из 10</h4>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="700">
+            <canvas id="myCanvas1" width="700" height="300" style="border:0px solid #000000;"></canvas>
+            <canvas id="myCanvas" width="700" height="50" style="border:0px solid #000000;"></canvas>
+            <canvas id="myCanvas2" width="700" height="150" style="border:0px solid #000000;"></canvas>
+        </td>
+        <td width="700">
+            <canvas id="myCanvas13" width="700" height="300" style="border:0px solid #000000;"></canvas>
+            <canvas id="myCanvas3" width="700" height="50" style="border:0px solid #000000;"></canvas>
+            <canvas id="myCanvas23" width="700" height="150" style="border:0px solid #000000;"></canvas>
+        </td>
+    </tr>
+</table>
+<script>
+
+    var value = Math.random();
+    var r = 'U';
+    if (value >= 0.5) {
+        r = 'M'
+    }
+    ;
+    var x = "{{MyColor}}";
+
+    var c1 = document.getElementById("myCanvas1");
+    var ctx1 = c1.getContext("2d");
+    ctx1.fillStyle = "#80A89D";
+    ctx1.fillRect(0, 0, 700, 300);
+
+    var c2 = document.getElementById("myCanvas2");
+    var ctx2 = c2.getContext("2d");
+    ctx2.fillStyle = "#724637";
+    ctx2.fillRect(0, 0, 700, 150);
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    if (r == 'M') {
+        ctx.fillStyle = "#6999C7"
+    }
+    ;
+    if (r == 'U') {
+        ctx.fillStyle = x
+    }
+    ;
+    ctx.fillRect(0, 0, 700, 50);
+
+    var c1 = document.getElementById("myCanvas13");
+    var ctx1 = c1.getContext("2d");
+    ctx1.fillStyle = "#80A89D";
+    ctx1.fillRect(0, 0, 700, 300);
+
+    var c2 = document.getElementById("myCanvas23");
+    var ctx2 = c2.getContext("2d");
+    ctx2.fillStyle = "#724637";
+    ctx2.fillRect(0, 0, 700, 150);
+
+    var c = document.getElementById("myCanvas3");
+    var ctx = c.getContext("2d");
+    if (r == 'U') {
+        ctx.fillStyle = "#6999C7"
+    }
+    ;
+    if (r == 'M') {
+        ctx.fillStyle = x
+    }
+    ;
+    ctx.fillRect(0, 0, 700, 50);
+
+    let radios = document.querySelectorAll('input[type="radio"]');
+    let button = document.querySelector('#button');
+    button.addEventListener('click', function () {
+        for (let radio of radios) {
+            if (radio.checked) {
+                if (radio.value == 'yes') {
+                    p = r;
+                    radio.value = p;
+                } else {
+                    if (r == 'M') {
+                        p = 'U'
+                    }
+                    ;
+                    if (r == 'U') {
+                        p = 'M'
+                    }
+                    ;
+                    radio.value = p;
+                }
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

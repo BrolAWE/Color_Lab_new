@@ -24,7 +24,7 @@
             гармоничным.</p>
         <p>Если Вы готовы принять участие в исследовании, заполните, пожалуйста, анкету.</p>
     {% endif %}
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form action="{% url 'russias_regions' %}" method="POST" class="post-form">{% csrf_token %}
         <table>
             <tr>
                 {{ form }}
