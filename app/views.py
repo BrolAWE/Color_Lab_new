@@ -2339,17 +2339,17 @@ def export_regions_xls(request):
     row_num = 0
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
-    columns = ['id', 'Year',
-               'sex', 'country1', 'country2', 'region', 'lang',
-               'edu', 'shade', 'color_like', 'color_dislike', 'color1', 'color2', 'color3', 'color4', 'color5',
-               'choice1', 'choice2', 'choice3', 'choice4', 'choice5', 'choice6', 'choice7', 'choice8', 'choice9',
-               'choice10', ]
+    columns = ['id', 'Year', 'sex', 'region', 'lang',
+               'edu', 'shade', 'color_like', 'color_dislike',
+               'color1', 'color2', 'color3', 'color4', 'color5',
+               'choice1', 'choice2', 'choice3', 'choice4', 'choice5',
+               'choice6', 'choice7', 'choice8', 'choice9', 'choice10', ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
     # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
     rows = Client_Color2.objects.order_by('Client_id').values_list('Client_id', 'Client_Year',
-                                                                   'Client_sex', 'Client_country1', 'Client_country2',
+                                                                   'Client_sex',
                                                                    'Client_region',
                                                                    'Client_lang',
                                                                    'Client_edu', 'Client_shade',
