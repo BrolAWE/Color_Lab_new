@@ -22,6 +22,12 @@ SEX_CHOICES_RU = [
     ('другой', 'другой')
 ]
 
+SEX_CHOICES_RF = [
+    ('', ''),
+    ('мужской', 'мужской'),  # male, female, other
+    ('женский', 'женский')
+]
+
 EDU_CHOICES_RU = [
     ('', ''),
     ('да', 'да'),
@@ -373,12 +379,11 @@ class Client_ColorForm_reg(forms.ModelForm):
     class Meta:
         model = Client_Color2
         fields = (
-            'Client_id', 'Client_Year', 'Client_sex', 'Client_region',
-            'Client_lang', 'Client_edu', 'Client_shade')
+            'Client_id', 'Client_Year', 'Client_sex',
+            'Client_region', 'Client_edu', 'Client_shade')
         labels = {
             'Client_Year': ('Год Вашего рождения :'), 'Client_sex': ('Ваш пол :'),
             'Client_region': ('Субъект РФ :'),
-            'Client_lang': ('Родной язык :'),
             'Client_edu': ('Художественное образование :'),
             'Client_shade': ('Испытываете ли Вы сложности с восприятием каких-либо оттенков?')
         }
@@ -392,7 +397,7 @@ class Client_ColorForm_reg(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['Client_sex'].choices = SEX_CHOICES_RU
+        self.fields['Client_sex'].choices = SEX_CHOICES_RF
         self.fields['Client_edu'].choices = EDU_CHOICES_RU
         self.fields['Client_shade'].choices = EDU_CHOICES_RU
 

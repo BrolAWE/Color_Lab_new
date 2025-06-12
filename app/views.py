@@ -2339,7 +2339,7 @@ def export_regions_xls(request):
     row_num = 0
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
-    columns = ['id', 'Year', 'sex', 'region', 'lang',
+    columns = ['id', 'Year', 'sex', 'region',
                'edu', 'shade', 'color_like', 'color_dislike',
                'color1', 'color2', 'color3', 'color4', 'color5',
                'choice1', 'choice2', 'choice3', 'choice4', 'choice5',
@@ -2351,7 +2351,6 @@ def export_regions_xls(request):
     rows = Client_Color2.objects.order_by('Client_id').values_list('Client_id', 'Client_Year',
                                                                    'Client_sex',
                                                                    'Client_region',
-                                                                   'Client_lang',
                                                                    'Client_edu', 'Client_shade',
                                                                    'color_like', 'color_dislike',
                                                                    'color1', 'color2',

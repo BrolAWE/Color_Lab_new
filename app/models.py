@@ -6,6 +6,7 @@ SEX_CHOICES = [
     ('женский', 'female, женский, femenino'),
     ('другой', 'other, другой, otro')
 ]
+
 EDU_CHOICES = [
     ('да', 'yes, да, si'),
     ('нет', 'no, нет, no'),
@@ -220,7 +221,6 @@ class Client_Color2(models.Model):
     Client_Year = models.IntegerField(validators=[MinValueValidator(1940), MaxValueValidator(2020)])
     Client_sex = models.CharField(max_length=10, choices=SEX_CHOICES)
     Client_region = models.CharField(max_length=50, choices=REG_CHOICES)
-    Client_lang = models.CharField(max_length=50)
     Client_edu = models.CharField(max_length=10, choices=EDU_CHOICES)
     Client_shade = models.CharField(max_length=10, choices=EDU_CHOICES)
     color_like = models.CharField(max_length=20, default='')
