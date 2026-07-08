@@ -205,6 +205,7 @@ COU_CHOICES = [
     ('Jordan', 'Jordan'),
     ('Kazakhstan', 'Kazakhstan'),
     ('Kenya', 'Kenya'),
+    ('Kyrgyzstan', 'Kyrgyzstan'),
     ('Latvia', 'Latvia'),
     ('Malaysia', 'Malaysia'),
     ('Mali', 'Mali'),
@@ -244,6 +245,7 @@ COU_CHOICES = [
     ('UAE', 'UAE'),
     ('UK', 'UK'),
     ('USA', 'USA'),
+    ('Uzbekistan', 'Uzbekistan'),
     ('Zimbabwe', 'Zimbabwe'),
     ('Other', 'Other'),
 ]
