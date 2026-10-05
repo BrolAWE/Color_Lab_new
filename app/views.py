@@ -7,7 +7,869 @@ from app.models import Client_Color1, Client_Color2
 import datetime
 
 
+# = ДА
+def russias_regions(request):
+    """Контроллер работы страницы с анкетой для родившихся и постоянно проживающих в России"""
+    msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+    if request.method == "POST":
+        form = Client_ColorForm_reg(request.POST)
+        print("мы тут")
+        if form.is_valid():
+            print("в if провалились")
+            # print("а форму не сохранили")
+            client = form.save()  # commit=False)
+            print("и форму сохранили")
+            print(client.Client_sex)
+            print(client.Client_edu)
+            print(client.Client_Year)
+            msg = client.Client_id
+            # Set a session value:
+            request.session["User_id"] = client.Client_id
+            # добавила Самойлова 24.5.22
+            key = client.Client_id
+            current_user = Client_Color2.objects.get(pk=key)
+            date = datetime.datetime.today()
+            current_user.color_like = date.strftime("%m/%d/%Y, %H:%M:%S")
+            current_user.save(update_fields=['color_like'])
+            # конец добавки
+            Lg = "ru"
+            next = "ПРОДОЛЖИТЬ"
+            return render(request, 'fav_color.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        form = Client_ColorForm_reg()
+        request.session["Lg"] = "ru"
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+    return render(request, 'russias_regions.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+
+
+def fav_color(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color_like.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color_like = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color_like'])  # изменила самойлова 24.5.22
+        print(current_user.color_like)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color_dislike = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color_dislike'])
+        print(current_user.color_dislike)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'dislike_color.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'fav_color.html')
+
+
+def dislike_color(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color_dislike.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color_dislike = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color_dislike'])  # изменила самойлова 24.5.22
+        print(current_user.color_dislike)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color1 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color1'])
+        print(current_user.color1)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'mtable1.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'dislike_color.html')
+
+
+def mtable1(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color1.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color1 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color1'])  # изменила самойлова 24.5.22
+        print(current_user.color1)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color2 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color2'])
+        print(current_user.color2)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'mtable2.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'mtable1.html')
+
+
+def mtable2(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color2.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color2 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color2'])  # изменила самойлова 24.5.22
+        print(current_user.color2)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color3 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color3'])
+        print(current_user.color3)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'mtable3.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'mtable2.html')
+
+
+def mtable3(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color3.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color3 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color3'])  # изменила самойлова 24.5.22
+        print(current_user.color3)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color4 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color4'])
+        print(current_user.color4)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'mtable4.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'mtable3.html')
+
+
+def mtable4(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color4.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color4 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color4'])  # изменила самойлова 24.5.22
+        print(current_user.color4)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color5 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color5'])
+        print(current_user.color5)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'mtable5.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'mtable4.html')
+
+
+def mtable5(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color5.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color5 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color5'])  # изменила самойлова 24.5.22
+        print(current_user.color5)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left1 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left1'])
+        print(current_user.left1)
+        # конец добавки
+        print(msg)
+        msg = "начальный запуск выбора 1. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color1
+        print(msg)
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice1.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'mtable5.html')
+
+
+def choice1(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color1  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice1.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left1.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left1 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left1'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color2
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left2 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left2'])
+        print(current_user.left2)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice2.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice1.html')
+
+
+def choice2(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color2  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice2.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left2.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left2 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left2'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color3
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left3 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left3'])
+        print(current_user.left3)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice3.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice2.html')
+
+
+def choice3(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color3  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice3.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left3.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left3 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left3'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color4
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left4 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left4'])
+        print(current_user.left4)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice4.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice3.html')
+
+
+def choice4(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color4  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice4.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left4.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left4 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left4'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color4
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left5 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left5'])
+        print(current_user.left5)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice5.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice4.html')
+
+
+def choice5(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color4  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice5.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left5.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left5 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left5'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color4
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left6 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left6'])
+        print(current_user.left6)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice6.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice5.html')
+
+
+def choice6(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color4  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice6.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left6.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left6 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left6'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color4
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left7 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left7'])
+        print(current_user.left7)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice7.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice6.html')
+
+
+def choice7(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color4  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice7.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left7.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left7 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left7'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color5
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left8 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left8'])
+        print(current_user.left8)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice8.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice7.html')
+
+
+def choice8(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color5  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice8.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left8.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left8 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left8'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color5
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left9 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left9'])
+        print(current_user.left9)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice9.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice8.html')
+
+
+def choice9(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color5  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice9.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left9.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left9 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left9'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        MyColor = current_user.color5
+        print(MyColor)
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left10 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['left10'])
+        print(current_user.left10)
+        # конец добавки
+        # Обрезать дату, оставить только 7 первых символо
+        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'choice10.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice9.html')
+
+
+def choice10(request):
+    if request.method == "POST":
+        if 'left' not in request.POST:
+            myleft = "null"
+            print('НЕ ПЕРЕДАЛА!!!')
+            print(myleft)
+            key = request.session["User_id"]  ##### 4.5.22
+            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
+            MyColor = current_user.color5  ##### 4.5.22
+            Lg = "ru"
+            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
+            next = "ПРОДОЛЖИТЬ"
+            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
+            print('Отладка2:MyColor = ', MyColor)
+            return render(request, 'choice10.html',
+                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
+        else:
+            myleft = request.POST['left']
+            print('ПЕРЕДАЛА!!!')
+            print(myleft)
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left10.strip('/')  # вставила  самойлова 28.5.22
+        print('отладка s =', s)
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+            print('ОТЛАДКА if s = ', s)
+        current_user.left10 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        print('отладка s =', s)
+        current_user.save(update_fields=['left10'])  # изменила самойлова 24.5.22
+        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
+        key = request.session["User_id"]
+        current_user = Client_Color2.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.left10.strip('/')  # вставила  самойлова 28.5.22
+        if (s[4] == ':'):  # вставила  самойлова 28.5.22
+            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.left10 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['left10'])
+        print('end')
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.left10 = current_user.left10.strip() + date.strftime('%H:%M:%S') + '/'
+        current_user.save(update_fields=['left10'])
+        print(current_user.left10)
+        # конец добавки
+        print(msg)
+        Lg = "ru"
+        next = "ПРОДОЛЖИТЬ"
+        return render(request, 'indexend.html', {'Lg': Lg, 'next': next})
+    else:
+        msg = "kuku"
+        print(msg)
+    return render(request, 'choice10.html')
+
+
+def export_regions_xls(request):
+    import xlwt
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="Canvas_regions.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('canvas list')  # this will make a sheet named Users Data
+    # Sheet header, first row
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+    columns = ['id', 'Year', 'sex', 'region',
+               'edu', 'shade', 'color_like', 'color_dislike',
+               'color1', 'color2', 'color3', 'color4', 'color5',
+               'choice1', 'choice2', 'choice3', 'choice4', 'choice5',
+               'choice6', 'choice7', 'choice8', 'choice9', 'choice10', ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+    rows = Client_Color2.objects.order_by('Client_id').values_list('Client_id', 'Client_Year',
+                                                                   'Client_sex',
+                                                                   'Client_region',
+                                                                   'Client_edu', 'Client_shade',
+                                                                   'color_like', 'color_dislike',
+                                                                   'color1', 'color2',
+                                                                   'color3', 'color4',
+                                                                   'color5',
+                                                                   'left1', 'left2', 'left3', 'left4', 'left5', 'left6',
+                                                                   'left7', 'left8',
+                                                                   'left9', 'left10', )
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+    wb.save(response)
+    return response
+
+
+# = НЕТ
+def other_countries(request):
+    """Контроллер страницы с анкетой для жителей разных стран мира"""
+    msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+    if request.method == "POST":
+        form = Client_ColorForm_en(request.POST)
+        if form.is_valid():
+            client = form.save()  # commit=False)
+            print(client.Client_sex)
+            print(client.Client_edu)
+            print(client.Client_Year)
+            msg = client.Client_id
+            # Set a session value:
+            request.session["User_id"] = client.Client_id
+            # добавила Самойлова 24.5.22
+            key = client.Client_id
+            current_user = Client_Color1.objects.get(pk=key)
+            date = datetime.datetime.today()
+            current_user.color_like = date.strftime("%m/%d/%Y, %H:%M:%S")
+            current_user.save(update_fields=['color_like'])
+            # конец добавки
+            Lg = "en"
+            next = "CONTINUE"
+            return render(request, 'fav_color_countries.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        form = Client_ColorForm_en()
+        request.session["Lg"] = "en"
+        Lg = "en"
+        next = "CONTINUE"
+        msg = 'After you have answered all the questions, click "continue" to go to the color selection page.'
+    return render(request, 'other_countries.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+
+
 def indexLn(request):
+    """Контроллер переключения между языками"""
     msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
     if request.method == "POST":
         form = Client_ColorForm(request.POST)
@@ -23,8 +885,8 @@ def indexLn(request):
             key = client.Client_id
             current_user = Client_Color1.objects.get(pk=key)
             date = datetime.datetime.today()
-            current_user.color1 = date.strftime("%m/%d/%Y, %H:%M:%S")
-            current_user.save(update_fields=['color1'])
+            current_user.color_like = date.strftime("%m/%d/%Y, %H:%M:%S")
+            current_user.save(update_fields=['color_like'])
             # конец добавки
             Lg = request.session["Lg"]
             if Lg == "en":
@@ -51,7 +913,7 @@ def indexLn(request):
                 next = "DALJE"
             else:
                 next = "ПРОДОЛЖИТЬ"
-            return render(request, 'index1.html', {'message': msg, 'Lg': Lg, 'next': next})
+            return render(request, 'fav_color_countries.html', {'message': msg, 'Lg': Lg, 'next': next})
 
         else:
             if request.POST['language'] == 'ru':
@@ -126,45 +988,114 @@ def indexLn(request):
                 Lg = 'en'
                 next = "CONTINUE"
                 msg = 'After you have answered all the questions, click "continue" to go to the color selection page.'
-            return render(request, 'index.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+            return render(request, 'other_countries.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
     else:
         form = Client_ColorForm_en()
         request.session["Lg"] = "en"
         Lg = "en"
         next = "CONTINUE"
         msg = 'After you have answered all the questions, click "continue" to go to the color selection page.'
-    return render(request, 'index.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+    return render(request, 'other_countries.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
 
 
-def index(request):
-    msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
+def fav_color_countries(request):
+    msg = "Все хорошо"
     if request.method == "POST":
-        form = Client_ColorForm_en(request.POST)
-        if form.is_valid():
-            client = form.save()  # commit=False)
-            print(client.Client_sex)
-            print(client.Client_edu)
-            print(client.Client_Year)
-            msg = client.Client_id
-            # Set a session value:
-            request.session["User_id"] = client.Client_id
-            # добавила Самойлова 24.5.22
-            key = client.Client_id
-            current_user = Client_Color1.objects.get(pk=key)
-            date = datetime.datetime.today()
-            current_user.color1 = date.strftime("%m/%d/%Y, %H:%M:%S")
-            current_user.save(update_fields=['color1'])
-            # конец добавки
-            Lg = "en"
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color1.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color_like.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color_like = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color_like'])  # изменила самойлова 24.5.22
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color_dislike = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color_dislike'])
+        # конец добавки
+        print(msg)
+        Lg = request.session["Lg"]
+        if Lg == "en":
             next = "CONTINUE"
-            return render(request, 'index1.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+        elif Lg == "es":
+            next = "CONTINUAR"
+        elif Lg == "ar":
+            next = "متابعة"
+        elif Lg == "cz":
+            next = "POKRAČOVAT"
+        elif Lg == "ind":
+            next = "LANJUTKAN"
+        elif Lg == "gr":
+            next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
+        elif Lg == "ch":
+            next = "繼續"
+        elif Lg == "kr":
+            next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
+        elif Lg == "srb":
+            next = "DALJE"
+        else:
+            next = "ПРОДОЛЖИТЬ"
+        return render(request, 'dislike_color_countries.html', {'message': msg, 'Lg': Lg, 'next': next})
     else:
-        form = Client_ColorForm_en()
-        request.session["Lg"] = "en"
-        Lg = "en"
-        next = "CONTINUE"
-        msg = 'After you have answered all the questions, click "continue" to go to the color selection page.'
-    return render(request, 'index.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'fav_color_countries.html')
+
+
+def dislike_color_countries(request):
+    msg = "Все хорошо"
+    if request.method == "POST":
+        MyColor = request.POST['mycolor']
+        key = request.session["User_id"]
+        current_user = Client_Color1.objects.get(pk=key)
+        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
+        s = current_user.color_dislike.strip('/')  # вставила  самойлова 28.5.22
+        if (s[0] == '#'):  # вставила  самойлова 28.5.22
+            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
+        current_user.color_dislike = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
+        current_user.save(update_fields=['color_dislike'])  # изменила самойлова 24.5.22
+        # добавила Самойлова 24.5.22
+        date = datetime.datetime.today()
+        current_user.color1 = date.strftime('%H:%M:%S')
+        current_user.save(update_fields=['color1'])
+        # конец добавки
+        print(msg)
+        Lg = request.session["Lg"]
+        if Lg == "en":
+            next = "CONTINUE"
+        elif Lg == "es":
+            next = "CONTINUAR"
+        elif Lg == "ar":
+            next = "متابعة"
+        elif Lg == "cz":
+            next = "POKRAČOVAT"
+        elif Lg == "ind":
+            next = "LANJUTKAN"
+        elif Lg == "gr":
+            next = "ΣΥΝΕΧΕΙΑ"
+        elif Lg == "fr":
+            next = "Continuer"
+        elif Lg == "ch":
+            next = "繼續"
+        elif Lg == "kr":
+            next = "계속"
+        elif Lg == "ic":
+            next = "Halda áfram"
+        elif Lg == "srb":
+            next = "DALJE"
+        else:
+            next = "ПРОДОЛЖИТЬ"
+        return render(request, 'index1.html', {'message': msg, 'Lg': Lg, 'next': next})
+    else:
+        msg = "Плохие данные"
+        print(msg)
+    return render(request, 'dislike_color_countries.html')
 
 
 def index1(request):
@@ -179,12 +1110,10 @@ def index1(request):
             s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
         current_user.color1 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
         current_user.save(update_fields=['color1'])  # изменила самойлова 24.5.22
-        print(current_user.color1)
         # добавила Самойлова 24.5.22
         date = datetime.datetime.today()
         current_user.color2 = date.strftime('%H:%M:%S')
         current_user.save(update_fields=['color2'])
-        print(current_user.color2)
         # конец добавки
         print(msg)
         Lg = request.session["Lg"]
@@ -323,7 +1252,6 @@ def index3(request):
         msg = "Плохие данные"
         print(msg)
     return render(request, 'index3.html')
-
 
 def index4(request):
     msg = "Все хорошо"
@@ -1515,7 +2443,7 @@ def export_xls(request):
     font_style.font.bold = True
     columns = ['id', 'Year',
                'sex', 'country1', 'country2', 'lang',
-               'edu', 'shade', 'color1', 'color2', 'color3', 'color4', 'color5',
+               'edu', 'shade', 'color_like', 'color_dislike', 'color1', 'color2', 'color3', 'color4', 'color5',
                'choice1', 'choice2', 'choice3', 'choice4', 'choice5', 'choice6', 'choice7', 'choice8', 'choice9',
                'choice10', ]
     for col_num in range(len(columns)):
@@ -1525,7 +2453,7 @@ def export_xls(request):
     rows = Client_Color1.objects.order_by('Client_id').values_list('Client_id', 'Client_Year',
                                                                    'Client_sex', 'Client_country1', 'Client_country2',
                                                                    'Client_lang',
-                                                                   'Client_edu', 'Client_shade', 'color1', 'color2',
+                                                                   'Client_edu', 'Client_shade', 'color_like', 'color_dislike', 'color1', 'color2',
                                                                    'color3', 'color4',
                                                                    'color5',
                                                                    'left1', 'left2', 'left3', 'left4', 'left5', 'left6',
@@ -1537,835 +2465,3 @@ def export_xls(request):
             ws.write(row_num, col_num, row[col_num], font_style)
     wb.save(response)
     return response
-
-# СУБЪЕКТЫ РФ
-
-
-def russias_regions(request):
-    msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
-    if request.method == "POST":
-        form = Client_ColorForm_reg(request.POST)
-        print("мы тут")
-        if form.is_valid():
-            print("в if провалились")
-            # print("а форму не сохранили")
-            client = form.save()  # commit=False)
-            print("и форму сохранили")
-            print(client.Client_sex)
-            print(client.Client_edu)
-            print(client.Client_Year)
-            msg = client.Client_id
-            # Set a session value:
-            request.session["User_id"] = client.Client_id
-            # добавила Самойлова 24.5.22
-            key = client.Client_id
-            current_user = Client_Color2.objects.get(pk=key)
-            date = datetime.datetime.today()
-            current_user.color_like = date.strftime("%m/%d/%Y, %H:%M:%S")
-            current_user.save(update_fields=['color_like'])
-            # конец добавки
-            Lg = "ru"
-            next = "ПРОДОЛЖИТЬ"
-            return render(request, 'fav_color.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
-    else:
-        form = Client_ColorForm_reg()
-        request.session["Lg"] = "ru"
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        msg = 'Когда вы заполните все поля анкеты, нажмите "продолжить" чтобы перейти к странице выбора цвета.'
-    return render(request, 'russias_regions.html', {'form': form, 'message': msg, 'Lg': Lg, 'next': next})
-
-
-def fav_color(request):
-    msg = "Все хорошо"
-    if request.method == "POST":
-        MyColor = request.POST['mycolor']
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.color_like.strip('/')  # вставила  самойлова 28.5.22
-        if (s[0] == '#'):  # вставила  самойлова 28.5.22
-            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.color_like = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['color_like'])  # изменила самойлова 24.5.22
-        print(current_user.color_like)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.color_dislike = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['color_dislike'])
-        print(current_user.color_dislike)
-        # конец добавки
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'dislike_color.html', {'message': msg, 'Lg': Lg, 'next': next})
-    else:
-        msg = "Плохие данные"
-        print(msg)
-    return render(request, 'fav_color.html')
-
-
-def dislike_color(request):
-    msg = "Все хорошо"
-    if request.method == "POST":
-        MyColor = request.POST['mycolor']
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.color_dislike.strip('/')  # вставила  самойлова 28.5.22
-        if (s[0] == '#'):  # вставила  самойлова 28.5.22
-            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.color_dislike = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['color_dislike'])  # изменила самойлова 24.5.22
-        print(current_user.color_dislike)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.color1 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['color1'])
-        print(current_user.color1)
-        # конец добавки
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'mtable1.html', {'message': msg, 'Lg': Lg, 'next': next})
-    else:
-        msg = "Плохие данные"
-        print(msg)
-    return render(request, 'dislike_color.html')
-
-
-def mtable1(request):
-    msg = "Все хорошо"
-    if request.method == "POST":
-        MyColor = request.POST['mycolor']
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.color1.strip('/')  # вставила  самойлова 28.5.22
-        if (s[0] == '#'):  # вставила  самойлова 28.5.22
-            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.color1 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['color1'])  # изменила самойлова 24.5.22
-        print(current_user.color1)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.color2 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['color2'])
-        print(current_user.color2)
-        # конец добавки
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'mtable2.html', {'message': msg, 'Lg': Lg, 'next': next})
-    else:
-        msg = "Плохие данные"
-        print(msg)
-    return render(request, 'mtable1.html')
-
-
-def mtable2(request):
-    msg = "Все хорошо"
-    if request.method == "POST":
-        MyColor = request.POST['mycolor']
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.color2.strip('/')  # вставила  самойлова 28.5.22
-        if (s[0] == '#'):  # вставила  самойлова 28.5.22
-            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.color2 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['color2'])  # изменила самойлова 24.5.22
-        print(current_user.color2)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.color3 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['color3'])
-        print(current_user.color3)
-        # конец добавки
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'mtable3.html', {'message': msg, 'Lg': Lg, 'next': next})
-    else:
-        msg = "Плохие данные"
-        print(msg)
-    return render(request, 'mtable2.html')
-
-
-def mtable3(request):
-    msg = "Все хорошо"
-    if request.method == "POST":
-        MyColor = request.POST['mycolor']
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.color3.strip('/')  # вставила  самойлова 28.5.22
-        if (s[0] == '#'):  # вставила  самойлова 28.5.22
-            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.color3 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['color3'])  # изменила самойлова 24.5.22
-        print(current_user.color3)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.color4 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['color4'])
-        print(current_user.color4)
-        # конец добавки
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'mtable4.html', {'message': msg, 'Lg': Lg, 'next': next})
-    else:
-        msg = "Плохие данные"
-        print(msg)
-    return render(request, 'mtable3.html')
-
-
-def mtable4(request):
-    msg = "Все хорошо"
-    if request.method == "POST":
-        MyColor = request.POST['mycolor']
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.color4.strip('/')  # вставила  самойлова 28.5.22
-        if (s[0] == '#'):  # вставила  самойлова 28.5.22
-            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.color4 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['color4'])  # изменила самойлова 24.5.22
-        print(current_user.color4)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.color5 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['color5'])
-        print(current_user.color5)
-        # конец добавки
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'mtable5.html', {'message': msg, 'Lg': Lg, 'next': next})
-    else:
-        msg = "Плохие данные"
-        print(msg)
-    return render(request, 'mtable4.html')
-
-
-def mtable5(request):
-    msg = "Все хорошо"
-    if request.method == "POST":
-        MyColor = request.POST['mycolor']
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.color5.strip('/')  # вставила  самойлова 28.5.22
-        if (s[0] == '#'):  # вставила  самойлова 28.5.22
-            s = s[8:16]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.color5 = MyColor + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['color5'])  # изменила самойлова 24.5.22
-        print(current_user.color5)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left1 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left1'])
-        print(current_user.left1)
-        # конец добавки
-        print(msg)
-        msg = "начальный запуск выбора 1. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color1
-        print(msg)
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice1.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "Плохие данные"
-        print(msg)
-    return render(request, 'mtable5.html')
-
-
-def choice1(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color1  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice1.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left1.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left1 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left1'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color2
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left2 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left2'])
-        print(current_user.left2)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice2.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice1.html')
-
-
-def choice2(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color2  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice2.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left2.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left2 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left2'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color3
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left3 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left3'])
-        print(current_user.left3)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice3.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice2.html')
-
-
-def choice3(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color3  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice3.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left3.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left3 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left3'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color4
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left4 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left4'])
-        print(current_user.left4)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice4.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice3.html')
-
-
-def choice4(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color4  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice4.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left4.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left4 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left4'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color4
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left5 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left5'])
-        print(current_user.left5)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice5.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice4.html')
-
-
-def choice5(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color4  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice5.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left5.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left5 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left5'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color4
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left6 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left6'])
-        print(current_user.left6)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice6.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice5.html')
-
-
-def choice6(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color4  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice6.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left6.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left6 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left6'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color4
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left7 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left7'])
-        print(current_user.left7)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice7.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice6.html')
-
-
-def choice7(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color4  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice7.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left7.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left7 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left7'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color5
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left8 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left8'])
-        print(current_user.left8)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice8.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice7.html')
-
-
-def choice8(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color5  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice8.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left8.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left8 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left8'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color5
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left9 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left9'])
-        print(current_user.left9)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice9.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice8.html')
-
-
-def choice9(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color5  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice9.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left9.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left9 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left9'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        MyColor = current_user.color5
-        print(MyColor)
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left10 = date.strftime('%H:%M:%S')
-        current_user.save(update_fields=['left10'])
-        print(current_user.left10)
-        # конец добавки
-        # Обрезать дату, оставить только 7 первых символо
-        MyColor = MyColor[:7]  # изменила самойлова 24.5.22
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'choice10.html', {'MyColor': MyColor, 'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice9.html')
-
-
-def choice10(request):
-    if request.method == "POST":
-        if 'left' not in request.POST:
-            myleft = "null"
-            print('НЕ ПЕРЕДАЛА!!!')
-            print(myleft)
-            key = request.session["User_id"]  ##### 4.5.22
-            current_user = Client_Color2.objects.get(pk=key)  ##### 4.5.22
-            MyColor = current_user.color5  ##### 4.5.22
-            Lg = "ru"
-            msg = "Ничего не выбрано. Выберите значение слева/справа"  ##### 4.5.22
-            next = "ПРОДОЛЖИТЬ"
-            MyColor = MyColor[:7]  # изменила самойлова 17:6:22
-            print('Отладка2:MyColor = ', MyColor)
-            return render(request, 'choice10.html',
-                          {'msg': msg, 'MyColor': MyColor, 'Lg': Lg, 'next': next})  ##### 4.5.22
-        else:
-            myleft = request.POST['left']
-            print('ПЕРЕДАЛА!!!')
-            print(myleft)
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left10.strip('/')  # вставила  самойлова 28.5.22
-        print('отладка s =', s)
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-            print('ОТЛАДКА if s = ', s)
-        current_user.left10 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        print('отладка s =', s)
-        current_user.save(update_fields=['left10'])  # изменила самойлова 24.5.22
-        msg = "начальный запуск страницы 7. Чтение указанногоцвета"
-        key = request.session["User_id"]
-        current_user = Client_Color2.objects.get(pk=key)
-        # удалить все, кроме чистой даты   -  вставила  самойлова 28.05.22
-        s = current_user.left10.strip('/')  # вставила  самойлова 28.5.22
-        if (s[4] == ':'):  # вставила  самойлова 28.5.22
-            s = s[2:10]  # вставила  самойлова 28.5.22 оставляем только дату
-        current_user.left10 = myleft + '/' + s + '/'  # изменила самойлова 28.5.22
-        current_user.save(update_fields=['left10'])
-        print('end')
-        # добавила Самойлова 24.5.22
-        date = datetime.datetime.today()
-        current_user.left10 = current_user.left10.strip() + date.strftime('%H:%M:%S') + '/'
-        current_user.save(update_fields=['left10'])
-        print(current_user.left10)
-        # конец добавки
-        print(msg)
-        Lg = "ru"
-        next = "ПРОДОЛЖИТЬ"
-        return render(request, 'indexend.html', {'Lg': Lg, 'next': next})
-    else:
-        msg = "kuku"
-        print(msg)
-    return render(request, 'choice10.html')
-
-
-def export_regions_xls(request):
-    import xlwt
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="Canvas_regions.xls"'
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('canvas list')  # this will make a sheet named Users Data
-    # Sheet header, first row
-    row_num = 0
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
-    columns = ['id', 'Year', 'sex', 'region',
-               'edu', 'shade', 'color_like', 'color_dislike',
-               'color1', 'color2', 'color3', 'color4', 'color5',
-               'choice1', 'choice2', 'choice3', 'choice4', 'choice5',
-               'choice6', 'choice7', 'choice8', 'choice9', 'choice10', ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
-    # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
-    rows = Client_Color2.objects.order_by('Client_id').values_list('Client_id', 'Client_Year',
-                                                                   'Client_sex',
-                                                                   'Client_region',
-                                                                   'Client_edu', 'Client_shade',
-                                                                   'color_like', 'color_dislike',
-                                                                   'color1', 'color2',
-                                                                   'color3', 'color4',
-                                                                   'color5',
-                                                                   'left1', 'left2', 'left3', 'left4', 'left5', 'left6',
-                                                                   'left7', 'left8',
-                                                                   'left9', 'left10', )
-    for row in rows:
-        row_num += 1
-        for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], font_style)
-    wb.save(response)
-    return response
-# http://127.0.0.1:8000/
-# http://127.0.0.1:8000/export_xls/
-# http://127.0.0.1:8000/export_regions_xls/
-# python manage.py runserver

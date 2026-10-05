@@ -18,7 +18,7 @@ p {
     clear: both;
 }
 
-button.t1 {
+.t1 {
     background-color: #808080;
     border: 2px solid #ffffff;
     color: #ffffff;
