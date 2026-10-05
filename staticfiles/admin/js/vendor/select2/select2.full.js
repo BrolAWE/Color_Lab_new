@@ -16,12 +16,12 @@
         // require('jQuery') returns a factory that requires window to
         // build a jQuery instance, we normalize how we use modules
         // that require this pattern but the window provided is a noop
-        // if it's defined (how scripts works)
+        // if it's defined (how jquery works)
         if (typeof window !== 'undefined') {
-          jQuery = require('scripts');
+          jQuery = require('jquery');
         }
         else {
-          jQuery = require('scripts')(root);
+          jQuery = require('jquery')(root);
         }
       }
       factory(jQuery);
@@ -6808,7 +6808,7 @@ S2.define('jquery.select2',[
 
   // Autoload the jQuery bindings
   // We know that all of the modules exist above this, so we're safe
-  var select2 = S2.require('scripts.select2');
+  var select2 = S2.require('jquery.select2');
 
   // Hold the AMD module references on the jQuery function that was just loaded
   // This allows Select2 to use the internal loader outside of this file, such
